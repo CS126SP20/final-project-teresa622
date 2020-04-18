@@ -20,6 +20,7 @@ class Tetromino {
  public:
   explicit Tetromino(int center_tile);
   Location GetPixelLocation(size_t index);
+  void SetPixelLocation(size_t index, Location loc);
 
  private:
   void InitializePixels_(int center_tile);

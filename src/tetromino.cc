@@ -62,7 +62,7 @@ void Tetromino::GenerateS(int center_tile) {
 }
 
 void Tetromino::GenerateT(int center_tile) {
-  pixels[0] = Location(center_tile - 1, 0);
+  pixels[0] = {center_tile - 1, 0};
   pixels[1] = Location(center_tile, 0);
   pixels[2] = Location(center_tile + 1, 0);
   pixels[3] = Location(center_tile, 1);
@@ -98,6 +98,10 @@ void Tetromino::GenerateL(int center_tile) {
 
 Location Tetromino::GetPixelLocation(size_t index) {
   return pixels[index];
+}
+
+void Tetromino::SetPixelLocation(size_t index, Location loc) {
+  pixels[index] = loc;
 }
 
 }

@@ -5,6 +5,7 @@
 
 #include <cinder/app/App.h>
 #include <mylibrary/tetromino.h>
+#include "mylibrary/engine.h"
 
 namespace myapp {
 
@@ -17,7 +18,9 @@ class MyApp : public cinder::app::App {
   void keyDown(cinder::app::KeyEvent) override;
 
  private:
+  std::chrono::time_point<std::chrono::system_clock> last_time_;
   mylibrary::Tetromino tetromino;
+  mylibrary::Engine engine_;
 };
 
 }  // namespace myapp
