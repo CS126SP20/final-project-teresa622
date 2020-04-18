@@ -9,7 +9,7 @@
 #include "mylibrary/tetromino_type.h"
 
 namespace mylibrary {
-const size_t kNumTetrominoTypes = 7;
+const int kNumTetrominoTypes = 7;
 const TetrominoType kTetrominoTypes[kNumTetrominoTypes] =
     {TetrominoType::kI, TetrominoType::kJ,
      TetrominoType::kL, TetrominoType::kO,
@@ -22,7 +22,7 @@ class Tetromino {
   Location GetPixelLocation(size_t index);
 
  private:
-  void InitializePixels_(TetrominoType tetromino_type, int center_tile);
+  void InitializePixels_(int center_tile);
   void GenerateI(int center_tile);
   void GenerateJ(int center_tile);
   void GenerateL(int center_tile);
@@ -30,7 +30,8 @@ class Tetromino {
   void GenerateT(int center_tile);
   void GenerateS(int center_tile);
   void GenerateZ(int center_tile);
-  Location pixels[4] = {Location(0,0), Location(0,0), Location(0,0), Location(0,0)};
+  Location pixels[4] = {Location(0,0), Location(0,0),
+                        Location(0,0), Location(0,0)};
   TetrominoType tetromino_type_;
 };
 

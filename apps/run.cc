@@ -13,11 +13,15 @@ using cinder::app::RendererGl;
 namespace myapp {
 
 const int kSamples = 8;
+const int kTileSize = 50;
+const int kSize = 16;
 const int kWidth = 800;
 const int kHeight = 800;
 
 void SetUp(App::Settings* settings) {
-  settings->setWindowSize(kWidth, kHeight);
+  const int width = static_cast<int>(kTileSize*kSize);
+  const int height = static_cast<int>(kTileSize*kSize);
+  settings->setWindowSize(width, height);
   settings->setTitle("My CS 126 Application");
 }
 
