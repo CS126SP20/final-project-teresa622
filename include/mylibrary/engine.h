@@ -12,7 +12,7 @@
 namespace mylibrary {
 
 class Engine {
-  const size_t kPiecesInTetromino = 4;
+  const size_t kPixelsInTetromino = 4;
  public:
   Engine(size_t width, size_t height);
 

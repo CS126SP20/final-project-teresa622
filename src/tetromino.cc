@@ -21,6 +21,11 @@ Tetromino::Tetromino(int center_tile) {
   InitializePixels_(center_tile);
 }
 
+Tetromino::Tetromino(int center_tile, TetrominoType tetromino_type) {
+  tetromino_type_ = tetromino_type;
+  InitializePixels_(center_tile);
+}
+
 void Tetromino::InitializePixels_(int center_tile) {
   switch (tetromino_type_) {
     case TetrominoType::kZ:
@@ -100,15 +105,18 @@ Location Tetromino::GetPixelLocation(size_t index) {
   return pixels[index];
 }
 
-void Tetromino::SetPixelLocation(size_t index, Location loc) {
-  pixels[index] = loc;
+void Tetromino::MoveTetromino(int horizontal_amount, int vertical_amount) {
+  for (auto& pixel : pixels) {
+    pixel = Location(pixel.Row() + horizontal_amount,
+        pixel.Col() + vertical_amount);
+  }
 }
 
 std::vector<int> Tetromino::FindContactPixels() {
   //TODO: Implement global contact indexes variable so that if the pixels have't been rotated, we can just return the same thing.
   std::vector<int> contact_indexes;
   std::vector<int> checked_indexes;
-  for (int i = 0; i < 4; i++) {
+  for (int i = 0; i < kPixelsInTetromino; i++) {
     //Check if we have already evaluates this pixel
     if (std::find(checked_indexes.begin(), checked_indexes.end(), i) != checked_indexes.end()) {
       continue;
@@ -119,7 +127,7 @@ std::vector<int> Tetromino::FindContactPixels() {
     Location contact_pixel = pixels[i];
     size_t pixel_index = i;
 
-    for (int j = i; j < 4; j++) {
+    for (int j = i; j < kPixelsInTetromino; j++) {
       if (pixels[j].Row() == contact_pixel.Row()) {
         //We've checked this pixel now, regardless if it's the contact or not
         checked_indexes.push_back(j);

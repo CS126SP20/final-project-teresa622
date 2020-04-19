@@ -18,8 +18,9 @@ void Engine::Step() {
   std::vector<int> contact_indexes = tetromino_.FindContactPixels();
 
   //Check if any of the contact pixels have reached a surface
-  for (int i = 0; i < kPiecesInTetromino; i++) {
-    if (std::find(contact_indexes.begin(), contact_indexes.end(), i) != contact_indexes.end()) {
+  for (int i = 0; i < kPixelsInTetromino; i++) {
+    if (std::find(contact_indexes.begin(), contact_indexes.end(), i)
+    != contact_indexes.end()) {
       int col = tetromino_.GetPixelLocation(i).Col();
       int row = tetromino_.GetPixelLocation(i).Row();
 
@@ -35,14 +36,11 @@ void Engine::Step() {
   }
 
   //Else drop the piece as usual
-  for (int i = 0; i < kPiecesInTetromino; i++) {
-    tetromino_.SetPixelLocation(i, tetromino_.GetPixelLocation(i) += Location(0, 1));
-  }
-
+  tetromino_.MoveTetromino(0, 1);
 }
 
 void Engine::AddTetrominoToScreen() {
-  for (int i = 0; i < kPiecesInTetromino; i ++) {
+  for (int i = 0; i < kPixelsInTetromino; i ++) {
     int x_loc = tetromino_.GetPixelLocation(i).Row();
     int y_loc = tetromino_.GetPixelLocation(i).Col();
     screen_[y_loc][x_loc] = true;
