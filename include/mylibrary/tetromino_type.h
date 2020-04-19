@@ -7,5 +7,5 @@
 namespace mylibrary {
 
 enum class TetrominoType { kO, kL, kS, kZ, kI, kJ, kT };
-}
+}   // namespace mylibrary
 #endif  // FINALPROJECT_SRC_TETROMINO_TYPE_H_

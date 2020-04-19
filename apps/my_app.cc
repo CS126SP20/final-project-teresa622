@@ -20,7 +20,7 @@ void MyApp::setup() {
 
 void MyApp::update() {
   const auto time = std::chrono::system_clock::now();
-  if (time - last_time_ > std::chrono::milliseconds(200)) {
+  if (time - last_time_ > std::chrono::milliseconds(400)) {
     engine_.Step();
     last_time_ = time;
     draw();
@@ -36,7 +36,38 @@ void MyApp::draw() {
   DrawScreen();
 }
 
-void MyApp::keyDown(KeyEvent event) { }
+void MyApp::keyDown(KeyEvent event) {
+  switch (event.getCode()) {
+    case KeyEvent::KEY_UP:
+    case KeyEvent::KEY_k:
+    case KeyEvent::KEY_w: {
+      engine_.UpdateMovement(mylibrary::Movement::kRotate);
+      break;
+    }
+
+    case KeyEvent::KEY_DOWN:
+    case KeyEvent::KEY_j:
+    case KeyEvent::KEY_s: {
+      engine_.UpdateMovement(mylibrary::Movement::kDown);
+      break;
+    }
+
+    case KeyEvent::KEY_LEFT:
+    case KeyEvent::KEY_h:
+    case KeyEvent::KEY_a: {
+      engine_.UpdateMovement(mylibrary::Movement::kLeft);
+      break;
+    }
+
+    case KeyEvent::KEY_RIGHT:
+    case KeyEvent::KEY_l:
+    case KeyEvent::KEY_d: {
+      engine_.UpdateMovement(mylibrary::Movement::kRight);
+      break;
+    }
+
+  }
+}
 
 void MyApp::DrawTetromino() {
   mylibrary::Tetromino tetromino = engine_.GetTetromino();
@@ -71,8 +102,10 @@ void MyApp::DrawScreen() {
             y_index * kTileSize,(x_index * kTileSize) + kTileSize,
             (y_index * kTileSize) + kTileSize));
       }
+
       x_index++;
     }
+
     y_index++;
     x_index = 0;
   }

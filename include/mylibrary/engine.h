@@ -5,15 +5,16 @@
 #ifndef FINALPROJECT_SRC_ENGINE_H_
 #define FINALPROJECT_SRC_ENGINE_H_
 
-#include <cstddef>
 #include <vector>
 
 #include "mylibrary/tetromino.h"
+#include "mylibrary/movement.h"
+
 namespace mylibrary {
 
 class Engine {
-  const size_t kPixelsInTetromino = 4;
  public:
+
   Engine(size_t width, size_t height);
 
   // Executes a time step: moves the tetromino
@@ -26,8 +27,11 @@ class Engine {
 
   std::vector<std::vector<bool>> GetScreen();
 
+  void UpdateMovement(Movement movement);
+
  private:
   void AddTetrominoToScreen();
+  bool CheckSurfaceContact();
  private:
   const size_t width_;
   const size_t height_;

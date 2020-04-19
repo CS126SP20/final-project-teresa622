@@ -53,10 +53,10 @@ void Tetromino::InitializePixels_(int center_tile) {
 }
 
 void Tetromino::GenerateZ(int center_tile) {
-  pixels[0] = {center_tile - 1, 0};
-  pixels[1] = {center_tile, 0};
-  pixels[2] = {center_tile, 1};
-  pixels[3] = {center_tile + 1, 1};
+  pixels[0] = {center_tile + 1, 1};
+  pixels[1] = {center_tile, 1};
+  pixels[2] = {center_tile, 0};
+  pixels[3] = {center_tile - 1, 0};
 }
 
 void Tetromino::GenerateS(int center_tile) {
@@ -109,6 +109,20 @@ void Tetromino::MoveTetromino(int horizontal_amount, int vertical_amount) {
   for (auto& pixel : pixels) {
     pixel = Location(pixel.Row() + horizontal_amount,
         pixel.Col() + vertical_amount);
+  }
+}
+
+void Tetromino::RotateTetromino() {
+  //O block's rotation does not change anything
+  if (tetromino_type_ == TetrominoType::kO) {
+    return;
+  }
+
+  int rotation_point_x = pixels[rotation_point_index].Row();
+  int rotation_point_y = pixels[rotation_point_index].Col();
+  for (auto& pixel : pixels) {
+    pixel = Location((rotation_point_x + rotation_point_y) - pixel.Col(),
+                     (rotation_point_y - rotation_point_x) + pixel.Row());
   }
 }
 
