@@ -10,7 +10,7 @@
 namespace myapp {
 
 using cinder::app::KeyEvent;
-MyApp::MyApp() : tetromino(8), engine_{16, 16} {
+MyApp::MyApp() : engine_{kSize, kSize} {
 }
 
 void MyApp::setup() {
@@ -31,14 +31,51 @@ void MyApp::update() {
 void MyApp::draw() {
   cinder::gl::enableAlphaBlending();
   cinder::gl::clear();
-  mylibrary::Tetromino tetromino1 = engine_.GetTetromino();
-  for (int i = 0; i < 4; i++) {
-    mylibrary::Location loc = tetromino1.GetPixelLocation(i);
-    cinder::gl::color(0, 1, 0);
-    cinder::gl::drawSolidRect(cinder::Rectf(loc.Row()*50, loc.Col()*50, (loc.Row()*50) + 50, (loc.Col()*50) + 50));
-  }
+
+  DrawTetromino();
+  DrawScreen();
 }
 
 void MyApp::keyDown(KeyEvent event) { }
+
+void MyApp::DrawTetromino() {
+  mylibrary::Tetromino tetromino = engine_.GetTetromino();
+
+  //Loop through each pixel and draw it in our app
+  for (int i = 0; i < 4; i++) {
+    mylibrary::Location loc = tetromino.GetPixelLocation(i);
+    cinder::gl::color(0, 1, 0);
+    cinder::gl::drawSolidRect(cinder::Rectf(loc.Row() * kTileSize,
+        loc.Col() * kTileSize, (loc.Row() * kTileSize) + kTileSize,
+        (loc.Col() * kTileSize) + kTileSize));
+  }
+}
+
+void MyApp::DrawScreen() {
+  //Credit for syntax for looping through a 2D vector:
+  //https://stackoverflow.com/questions/1784573/iterator-for-2d-vector?rq=1
+  //Answered by Austin Hyde
+  std::vector<std::vector<bool>> screen = engine_.GetScreen();
+  std::vector< std::vector<bool> >::const_iterator row;
+  std::vector<bool>::const_iterator col;
+  size_t x_index = 0;
+  size_t y_index = 0;
+
+  for (row = screen.begin(); row != screen.end(); ++row) {
+    for (col = row->begin(); col != row->end(); ++col) {
+      //Color the true locations in the 2D vector > those are the the pixels
+      //that have already touched a surface
+      if (*col) {
+        cinder::gl::color(0, 1, 0);
+        cinder::gl::drawSolidRect(cinder::Rectf(x_index * kTileSize,
+            y_index * kTileSize,(x_index * kTileSize) + kTileSize,
+            (y_index * kTileSize) + kTileSize));
+      }
+      x_index++;
+    }
+    y_index++;
+    x_index = 0;
+  }
+}
 
 }  // namespace myapp

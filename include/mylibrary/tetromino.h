@@ -21,6 +21,7 @@ class Tetromino {
   explicit Tetromino(int center_tile);
   Location GetPixelLocation(size_t index);
   void SetPixelLocation(size_t index, Location loc);
+  std::vector<int> FindContactPixels();
 
  private:
   void InitializePixels_(int center_tile);
@@ -31,9 +32,12 @@ class Tetromino {
   void GenerateT(int center_tile);
   void GenerateS(int center_tile);
   void GenerateZ(int center_tile);
+
+ private:
   Location pixels[4] = {Location(0,0), Location(0,0),
                         Location(0,0), Location(0,0)};
   TetrominoType tetromino_type_;
+
 };
 
 }

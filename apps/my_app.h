@@ -9,6 +9,9 @@
 
 namespace myapp {
 
+const int kTileSize = 50;
+const int kSize = 16;
+
 class MyApp : public cinder::app::App {
  public:
   MyApp();
@@ -18,8 +21,11 @@ class MyApp : public cinder::app::App {
   void keyDown(cinder::app::KeyEvent) override;
 
  private:
+  void DrawTetromino();
+  void DrawScreen();
+
+ private:
   std::chrono::time_point<std::chrono::system_clock> last_time_;
-  mylibrary::Tetromino tetromino;
   mylibrary::Engine engine_;
 };
 

@@ -12,7 +12,7 @@
 namespace mylibrary {
 
 class Engine {
-  const size_t kWidth = 16;
+  const size_t kPiecesInTetromino = 4;
  public:
   Engine(size_t width, size_t height);
 
@@ -23,11 +23,18 @@ class Engine {
   void Reset();
 
   Tetromino GetTetromino();
+
+  std::vector<std::vector<bool>> GetScreen();
+
+ private:
+  void AddTetrominoToScreen();
  private:
   const size_t width_;
   const size_t height_;
   std::vector<std::vector<bool>> screen_;
   Tetromino tetromino_;
 };
-}
+
+}   //namespace mylibrary
+
 #endif  // FINALPROJECT_SRC_ENGINE_H_

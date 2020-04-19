@@ -13,8 +13,6 @@ using cinder::app::RendererGl;
 namespace myapp {
 
 const int kSamples = 8;
-const int kTileSize = 50;
-const int kSize = 16;
 const int kWidth = 800;
 const int kHeight = 800;
 
