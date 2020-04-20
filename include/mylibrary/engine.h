@@ -40,7 +40,6 @@ class Engine {
   const size_t height_;
   std::vector<std::vector<bool>> screen_;
   Tetromino tetromino_;
-  bool drop_buffer_;
 };
 
 }   //namespace mylibrary
