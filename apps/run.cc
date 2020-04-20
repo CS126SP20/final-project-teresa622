@@ -20,7 +20,7 @@ void SetUp(App::Settings* settings) {
   const int width = static_cast<int>(kTileSize*kSize);
   const int height = static_cast<int>(kTileSize*kSize);
   settings->setWindowSize(width, height);
-  settings->setTitle("My CS 126 Application");
+  settings->setTitle("Tetris");
 }
 
 }  // namespace myapp

@@ -4,7 +4,6 @@
 
 #include "mylibrary/engine.h"
 
-#include <iostream>
 #include <utility>
 
 namespace mylibrary {
@@ -33,20 +32,67 @@ void Engine::AddTetrominoToScreen() {
 void Engine::UpdateMovement(Movement movement) {
   switch (movement) {
     case Movement::kLeft:
-      tetromino_.MoveTetromino(-1, 0);
+      if (!MovementConflict(-1, 0)) {
+        tetromino_.MoveTetromino(-1, 0);
+      }
       break;
     case Movement::kRight:
-      tetromino_.MoveTetromino(1, 0);
+      if (!MovementConflict(1, 0)) {
+        tetromino_.MoveTetromino(1, 0);
+      }
       break;
     case Movement::kDown:
-      tetromino_.MoveTetromino(0, 1);
+      if (!MovementConflict(0, 1)) {
+        tetromino_.MoveTetromino(0, 1);
+      }
       break;
     case Movement::kRotate:
-      tetromino_.RotateTetromino();
+      if (!RotationConflict()) {
+        tetromino_.RotateTetromino(width_, height_);
+      }
       break;
   }
 
   CheckSurfaceContact();
+}
+
+bool Engine::MovementConflict(int horizontal_amt, int vertical_amt) {
+  for (int i = 0; i < kPixelsInTetromino; i++) {
+    int pixel_row = tetromino_.GetPixelLocation(i).Row() + horizontal_amt;
+    int pixel_col = tetromino_.GetPixelLocation(i).Col() + vertical_amt;
+    if (pixel_col > height_ - 1 || pixel_row < 0 || pixel_row > width_ - 1
+        || screen_[pixel_col][pixel_row]) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+bool Engine::RotationConflict() {
+  if (tetromino_.GetTetrominoType() == TetrominoType::kO) {
+    return true;
+  }
+
+  Location rotation_loc = tetromino_.GetRotationLocation();
+  int rotation_point_x = rotation_loc.Row();
+  int rotation_point_y = rotation_loc.Col();
+  for (int i = 0; i < kPixelsInTetromino; i++) {
+    int y_loc = (rotation_point_x + rotation_point_y) - tetromino_.GetPixelLocation(i).Col();
+    int x_loc = (rotation_point_y - rotation_point_x) + tetromino_.GetPixelLocation(i).Row();
+
+    //Check if it crosses the screen boundaries
+    if (y_loc > width_ - 1 || y_loc < 0 || x_loc > height_ - 1) {
+      return true;
+    }
+
+    //Check if it conflicts with any tetrominoes
+    if (screen_[x_loc][y_loc]) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 bool Engine::CheckSurfaceContact() {

@@ -32,6 +32,8 @@ class Engine {
  private:
   void AddTetrominoToScreen();
   bool CheckSurfaceContact();
+  bool MovementConflict(int horizontal_amt, int vertical_amt);
+  bool RotationConflict();
  private:
   const size_t width_;
   const size_t height_;

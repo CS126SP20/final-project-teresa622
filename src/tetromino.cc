@@ -112,18 +112,23 @@ void Tetromino::MoveTetromino(int horizontal_amount, int vertical_amount) {
   }
 }
 
-void Tetromino::RotateTetromino() {
-  //O block's rotation does not change anything
-  if (tetromino_type_ == TetrominoType::kO) {
-    return;
-  }
-
+void Tetromino::RotateTetromino(int width, int height) {
   int rotation_point_x = pixels[rotation_point_index].Row();
   int rotation_point_y = pixels[rotation_point_index].Col();
+
+  //Rotate each pixel
   for (auto& pixel : pixels) {
     pixel = Location((rotation_point_x + rotation_point_y) - pixel.Col(),
                      (rotation_point_y - rotation_point_x) + pixel.Row());
   }
+}
+
+Location Tetromino::GetRotationLocation() {
+  return pixels[rotation_point_index];
+}
+
+TetrominoType Tetromino::GetTetrominoType() {
+  return tetromino_type_;
 }
 
 std::vector<int> Tetromino::FindContactPixels() {
