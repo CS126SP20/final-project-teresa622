@@ -10,9 +10,8 @@
 #include "mylibrary/engine.h"
 
 namespace myapp {
-
-const int kTileSize = 50;
-const int kSize = 16;
+const size_t kWidth = 12;
+const size_t kHeight = 15;
 
 class MyApp : public cinder::app::App {
  public:
@@ -30,6 +29,9 @@ class MyApp : public cinder::app::App {
   std::chrono::time_point<std::chrono::system_clock> last_time_;
   mylibrary::Engine engine_;
   mylibrary::LeaderBoard leaderboard_;
+  size_t tile_size_;
+  std::string username_;
+  size_t speed_;
 };
 
 }  // namespace myapp

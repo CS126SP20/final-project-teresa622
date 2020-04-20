@@ -5,15 +5,24 @@
 #include <cinder/app/App.h>
 #include <cinder/gl/draw.h>
 #include <cinder/gl/gl.h>
-#include <mylibrary/engine.h>
+#include <gflags/gflags.h>
+
+#include "mylibrary/engine.h"
 
 namespace myapp {
+
 const char kDbPath[] = "tetris.db";
+
+DECLARE_uint32(tilesize);
+DECLARE_string(name);
 
 using cinder::app::KeyEvent;
 MyApp::MyApp()
-  : engine_{kSize, kSize},
-    leaderboard_{cinder::app::getAssetPath(kDbPath).string()} {}
+  : engine_{kWidth, kHeight},
+    leaderboard_{cinder::app::getAssetPath(kDbPath).string()},
+    tile_size_{FLAGS_tilesize},
+    username_{FLAGS_name},
+    speed_{750} {}
 
 void MyApp::setup() {
   cinder::gl::enableDepthWrite();
@@ -22,7 +31,7 @@ void MyApp::setup() {
 
 void MyApp::update() {
   const auto time = std::chrono::system_clock::now();
-  if (time - last_time_ > std::chrono::milliseconds(400)) {
+  if (time - last_time_ > std::chrono::milliseconds(speed_)) {
     engine_.Step();
     last_time_ = time;
     draw();
@@ -78,9 +87,9 @@ void MyApp::DrawTetromino() {
   for (int i = 0; i < 4; i++) {
     mylibrary::Location loc = tetromino.GetPixelLocation(i);
     cinder::gl::color(0, 1, 0);
-    cinder::gl::drawSolidRect(cinder::Rectf(loc.Row() * kTileSize,
-        loc.Col() * kTileSize, (loc.Row() * kTileSize) + kTileSize,
-        (loc.Col() * kTileSize) + kTileSize));
+    cinder::gl::drawSolidRect(cinder::Rectf(loc.Row() * tile_size_,
+        loc.Col() * tile_size_, (loc.Row() * tile_size_) + tile_size_,
+        (loc.Col() * tile_size_) + tile_size_));
   }
 }
 
@@ -100,9 +109,9 @@ void MyApp::DrawScreen() {
       //that have already touched a surface
       if (*col) {
         cinder::gl::color(0, 1, 0);
-        cinder::gl::drawSolidRect(cinder::Rectf(x_index * kTileSize,
-            y_index * kTileSize,(x_index * kTileSize) + kTileSize,
-            (y_index * kTileSize) + kTileSize));
+        cinder::gl::drawSolidRect(cinder::Rectf(x_index * tile_size_,
+            y_index * tile_size_,(x_index * tile_size_) + tile_size_,
+            (y_index * tile_size_) + tile_size_));
       }
 
       x_index++;

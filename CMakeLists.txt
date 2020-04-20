@@ -105,9 +105,24 @@ FetchContent_Declare(
         GIT_REPOSITORY https://github.com/alex85k/sqlite3-cmake.git
         GIT_TAG v3.24.0
 )
+
 FetchContent_GetProperties(sqlite3)
 if (NOT sqlite3_POPULATED)
     FetchContent_Populate(sqlite3)
     add_subdirectory(${sqlite3_SOURCE_DIR} ${sqlite3_BINARY_DIR})
     target_include_directories(sqlite3 INTERFACE ${sqlite3_SOURCE_DIR}/src)
+endif ()
+
+# Command-line parsing library
+FetchContent_Declare(
+        gflags
+        GIT_REPOSITORY https://github.com/gflags/gflags.git
+        GIT_TAG v2.2.2
+)
+
+# Adds gflags::gflags
+FetchContent_GetProperties(gflags)
+if (NOT gflags_POPULATED)
+    FetchContent_Populate(gflags)
+    add_subdirectory(${gflags_SOURCE_DIR} ${gflags_BINARY_DIR})
 endif ()
