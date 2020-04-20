@@ -24,8 +24,8 @@ class Tetromino {
   Tetromino(int center_tile, TetrominoType tetromino_type);
   Location GetPixelLocation(size_t index);
   void MoveTetromino(int horizontal_amount, int vertical_amount);
-  void RotateTetromino(int width, int height);
-  Location GetRotationLocation();
+  void RotateTetromino();
+  Location GetRotationPoint();
   TetrominoType GetTetrominoType();
   std::vector<int> FindContactPixels();
 

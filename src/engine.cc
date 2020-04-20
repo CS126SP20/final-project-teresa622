@@ -48,7 +48,7 @@ void Engine::UpdateMovement(Movement movement) {
       break;
     case Movement::kRotate:
       if (!RotationConflict()) {
-        tetromino_.RotateTetromino(width_, height_);
+        tetromino_.RotateTetromino();
       }
       break;
   }
@@ -74,12 +74,14 @@ bool Engine::RotationConflict() {
     return true;
   }
 
-  Location rotation_loc = tetromino_.GetRotationLocation();
-  int rotation_point_x = rotation_loc.Row();
-  int rotation_point_y = rotation_loc.Col();
+  //Get the rotation point from tetromino to calculate the rotation locations
+  Location rotation_loc = tetromino_.GetRotationPoint();
+  int rot_x = rotation_loc.Row();
+  int rot_y = rotation_loc.Col();
+
   for (int i = 0; i < kPixelsInTetromino; i++) {
-    int y_loc = (rotation_point_x + rotation_point_y) - tetromino_.GetPixelLocation(i).Col();
-    int x_loc = (rotation_point_y - rotation_point_x) + tetromino_.GetPixelLocation(i).Row();
+    int y_loc = (rot_x + rot_y) - tetromino_.GetPixelLocation(i).Col();
+    int x_loc = (rot_y - rot_x) + tetromino_.GetPixelLocation(i).Row();
 
     //Check if it crosses the screen boundaries
     if (y_loc > width_ - 1 || y_loc < 0 || x_loc > height_ - 1) {

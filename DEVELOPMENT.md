@@ -2,8 +2,9 @@
 
 ---
 - **4/19/20** Implemented rotation functionality
-    * Fix the rotation of L tetromino
-    * Next development: Implement a basic scoring system to show that SQLite is working
+    * Consider modifying the rotation of L tetromino
+    * Test more of tetromino
+    * Next development: Implement user modified game settings(tile size, screen size, etc.) via command line
 - **4/18/20** Figured out how to make tetrominoes fall and stack on top of each other.
     * Need to test all the currently functioning code
     * Next development: Translating and rotating tetrominoes with key controls

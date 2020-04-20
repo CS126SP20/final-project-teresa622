@@ -113,7 +113,11 @@ void Tetromino::MoveTetromino(int horizontal_amount, int vertical_amount) {
   }
 }
 
-void Tetromino::RotateTetromino(int width, int height) {
+void Tetromino::RotateTetromino() {
+  if (tetromino_type_ == TetrominoType::kO) {
+    return;
+  }
+
   int rotation_point_x = pixels[rotation_point_index].Row();
   int rotation_point_y = pixels[rotation_point_index].Col();
 
@@ -126,7 +130,7 @@ void Tetromino::RotateTetromino(int width, int height) {
   rotated = true;
 }
 
-Location Tetromino::GetRotationLocation() {
+Location Tetromino::GetRotationPoint() {
   return pixels[rotation_point_index];
 }
 
