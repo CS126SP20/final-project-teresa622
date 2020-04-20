@@ -5,6 +5,7 @@
 #ifndef FINALPROJECT_SRC_LEADERBOARD_H_
 #define FINALPROJECT_SRC_LEADERBOARD_H_
 #include <sqlite_modern_cpp.h>
+
 namespace mylibrary {
 
 class LeaderBoard {

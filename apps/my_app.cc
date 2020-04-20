@@ -8,10 +8,12 @@
 #include <mylibrary/engine.h>
 
 namespace myapp {
+const char kDbPath[] = "tetris.db";
 
 using cinder::app::KeyEvent;
-MyApp::MyApp() : engine_{kSize, kSize} {
-}
+MyApp::MyApp()
+  : engine_{kSize, kSize},
+    leaderboard_{cinder::app::getAssetPath(kDbPath).string()} {}
 
 void MyApp::setup() {
   cinder::gl::enableDepthWrite();

@@ -4,7 +4,9 @@
 #define FINALPROJECT_APPS_MYAPP_H_
 
 #include <cinder/app/App.h>
+#include <mylibrary/leaderboard.h>
 #include <mylibrary/tetromino.h>
+
 #include "mylibrary/engine.h"
 
 namespace myapp {
@@ -27,6 +29,7 @@ class MyApp : public cinder::app::App {
  private:
   std::chrono::time_point<std::chrono::system_clock> last_time_;
   mylibrary::Engine engine_;
+  mylibrary::LeaderBoard leaderboard_;
 };
 
 }  // namespace myapp
