@@ -14,12 +14,29 @@ Engine::Engine(size_t width, size_t height)
 }
 
 void Engine::Step() {
-  //Check if any of the contact pixels have reached a surface
-  //Else drop the piece as usual
-  if (!HasSurfaceContact()) {
+  if (game_over_) {
+    return;
+  }
+
+  //Move the tetromino down if possible
+  if (!HasMovementConflict(0, 1)) {
     tetromino_.MoveTetromino(0, 1);
   } else {
-    ClearedRow();
+    //The tetromino cannot be moved down > it has reached a surface.
+    GenerateNewTetromino();
+  }
+
+  ClearedRow();
+}
+
+void Engine::GenerateNewTetromino() {
+  AddTetrominoToScreen();
+  tetromino_ = Tetromino(width_ / 2);
+  if (HasMovementConflict(0, 0)) {
+    tetromino_.MoveTetromino(0, -1);
+    if (HasMovementConflict(0, 0)) {
+      game_over_ = true;
+    }
   }
 }
 
@@ -28,6 +45,11 @@ void Engine::AddTetrominoToScreen() {
   for (int i = 0; i < kPixelsInTetromino; i ++) {
     int x_loc = tetromino_.GetPixelLocation(i).Row();
     int y_loc = tetromino_.GetPixelLocation(i).Col();
+
+    //If this pixel is above the screen, don't add it to the screen.
+    if (y_loc < 0) {
+      continue;
+    }
     screen_[y_loc][x_loc] = true;
   }
 }
@@ -50,12 +72,6 @@ void Engine::UpdateMovement(Movement movement) {
       if (!HasMovementConflict(0, 1)) {
         tetromino_.MoveTetromino(0, 1);
       }
-
-      //Downward movement needs to check for potentially falling on a surface
-      //or clearing a row
-      if (HasSurfaceContact()) {
-        ClearedRow();
-      }
       break;
     case Movement::kRotate:
       if (!HasRotationConflict()) {
@@ -69,11 +85,8 @@ void Engine::UpdateMovement(Movement movement) {
         fallen = HasMovementConflict(0, 1);
       }
 
-      //Fall also need to check for surface contact because it's successive
-      //kDowns essentially
-      if (HasSurfaceContact()) {
-        ClearedRow();
-      }
+      //Generate a new tetromino, this one has reached a surface
+      Step();
       break;
   }
 }
@@ -107,6 +120,13 @@ bool Engine::HasMovementConflict(int horizontal_amt, int vertical_amt) {
   for (int i = 0; i < kPixelsInTetromino; i++) {
     int pixel_row = tetromino_.GetPixelLocation(i).Row() + horizontal_amt;
     int pixel_col = tetromino_.GetPixelLocation(i).Col() + vertical_amt;
+
+    //If this pixel is above the screen, disregard it. It will be handled by
+    //game ending mechanism
+    if (pixel_col < 0) {
+      continue;
+    }
+
     if (pixel_col > height_ - 1 || pixel_row < 0 || pixel_row > width_ - 1
         || screen_[pixel_col][pixel_row]) {
       return true;
@@ -144,31 +164,16 @@ bool Engine::HasRotationConflict() {
   return false;
 }
 
-bool Engine::HasSurfaceContact() {
-  std::vector<int> contact_indexes = tetromino_.FindContactPixels();
-  for (int & index : contact_indexes) {
-    int col = tetromino_.GetPixelLocation(index).Col();
-    int row = tetromino_.GetPixelLocation(index).Row();
-
-    //Tetromino has touched a surface
-    //(bottom of the screen or another tetromino)
-    if (col == height_ - 1 || screen_[col + 1][row]) {
-      AddTetrominoToScreen();
-      //Make a new tetromino
-      tetromino_ = Tetromino(width_ / 2);
-      return true;
-    }
-  }
-
-  return false;
-}
-
 Tetromino Engine::GetTetromino() {
   return tetromino_;
 }
 
 std::vector<std::vector<bool>> Engine::GetScreen() {
   return screen_;
+}
+
+bool Engine::IsGameOver() {
+  return game_over_;
 }
 
 }   // namespace mylibrary

@@ -11,7 +11,7 @@
 
 namespace myapp {
 const size_t kWidth = 12;
-const size_t kHeight = 15;
+const size_t kHeight = 20;
 
 class MyApp : public cinder::app::App {
  public:
@@ -24,6 +24,7 @@ class MyApp : public cinder::app::App {
  private:
   void DrawTetromino();
   void DrawScreen();
+  void DrawGameOver();
 
  private:
   std::chrono::time_point<std::chrono::system_clock> last_time_;
@@ -32,6 +33,8 @@ class MyApp : public cinder::app::App {
   size_t tile_size_;
   std::string username_;
   size_t speed_;
+  bool printed_game_over_;
+  bool game_over;
 };
 
 }  // namespace myapp

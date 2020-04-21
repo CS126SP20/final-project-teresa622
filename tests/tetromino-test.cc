@@ -13,10 +13,10 @@ TEST_CASE("Tetromino I") {
   (5, mylibrary::TetrominoType::kI);
 
   SECTION("Initializing I") {
-    mylibrary::Location pixels[4] = {mylibrary::Location(5, 0),
-                                     mylibrary::Location (5, 1),
-                                     mylibrary::Location(5, 2),
-                                     mylibrary::Location(5, 3)};
+    mylibrary::Location pixels[4] = {mylibrary::Location(3, 1),
+                                     mylibrary::Location (4, 1),
+                                     mylibrary::Location(5, 1),
+                                     mylibrary::Location(6, 1)};
     for (int i = 0; i < 4; i++) {
       REQUIRE(tetromino.GetPixelLocation(i) == pixels[i]);
     }
@@ -25,12 +25,12 @@ TEST_CASE("Tetromino I") {
   //Tests Move Tetromino here
   SECTION("Move Tetromino: positive values") {
     tetromino.MoveTetromino(3, 1);
-    REQUIRE(tetromino.GetPixelLocation(0) == mylibrary::Location(8, 1));
+    REQUIRE(tetromino.GetPixelLocation(0) == mylibrary::Location(6, 2));
   }
 
-  SECTION("Move Tetromino: negative horizontal values") {
-    tetromino.MoveTetromino(-3, 0);
-    REQUIRE(tetromino.GetPixelLocation(3) == mylibrary::Location(2, 3));
+  SECTION("Move Tetromino: negative values") {
+    tetromino.MoveTetromino(-3, -1);
+    REQUIRE(tetromino.GetPixelLocation(0) == mylibrary::Location(0, 0));
   }
 
   SECTION("Get Contact Pixels") {

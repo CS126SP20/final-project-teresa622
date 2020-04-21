@@ -4,6 +4,9 @@
 #include <cinder/gl/draw.h>
 #include <cinder/gl/gl.h>
 #include <gflags/gflags.h>
+#include <cinder/Text.h>
+#include <cinder/Font.h>
+
 
 #include "my_app.h"
 #include "mylibrary/engine.h"
@@ -11,6 +14,20 @@
 namespace myapp {
 
 const char kDbPath[] = "tetris.db";
+
+#if defined(CINDER_COCOA_TOUCH)
+const char kNormalFont[] = "Arial";
+const char kBoldFont[] = "Arial-BoldMT";
+const char kDifferentFont[] = "AmericanTypewriter";
+#elif defined(CINDER_LINUX)
+const char kNormalFont[] = "Arial Unicode MS";
+const char kBoldFont[] = "Arial Unicode MS";
+const char kDifferentFont[] = "Purisa";
+#else
+const char kNormalFont[] = "Arial";
+const char kBoldFont[] = "Arial Bold";
+const char kDifferentFont[] = "Papyrus";
+#endif
 
 DECLARE_uint32(tilesize);
 DECLARE_string(name);
@@ -34,15 +51,22 @@ void MyApp::update() {
   if (time - last_time_ > std::chrono::milliseconds(speed_)) {
     engine_.Step();
     last_time_ = time;
-    draw();
   }
 
 }
 
 void MyApp::draw() {
   cinder::gl::enableAlphaBlending();
-  cinder::gl::clear();
 
+  if (engine_.IsGameOver() && game_over) {
+    if (!printed_game_over_) cinder::gl::clear(cinder::Color(1, 0, 0));
+    DrawGameOver();
+    return;
+  } else if (engine_.IsGameOver() && !game_over) {
+    game_over = true;
+  }
+
+  cinder::gl::clear();
   DrawTetromino();
   DrawScreen();
 }
@@ -92,6 +116,12 @@ void MyApp::DrawTetromino() {
   for (int i = 0; i < 4; i++) {
     mylibrary::Location loc = tetromino.GetPixelLocation(i);
     cinder::gl::color(0, 1, 0);
+
+    //If this location is above the screen, don't draw it
+    if (loc.Col() < 0) {
+      continue;
+    }
+
     cinder::gl::drawSolidRect(cinder::Rectf(loc.Row() * tile_size_,
         loc.Col() * tile_size_, (loc.Row() * tile_size_) + tile_size_,
         (loc.Col() * tile_size_) + tile_size_));
@@ -125,6 +155,36 @@ void MyApp::DrawScreen() {
     y_index++;
     x_index = 0;
   }
+}
+
+template <typename C>
+void PrintText(const std::string& text, const C& color, const cinder::ivec2& size,
+               const cinder::vec2& loc) {
+  cinder::gl::color(color);
+
+  auto box = cinder::TextBox()
+      .alignment(cinder::TextBox::CENTER)
+      .font(cinder::Font(kNormalFont, 30))
+      .size(size)
+      .color(color)
+      .backgroundColor(cinder::ColorA(0, 0, 0, 0))
+      .text(text);
+
+  const auto box_size = box.getSize();
+  const cinder::vec2 locp = {loc.x - box_size.x / 2, loc.y - box_size.y / 2};
+  const auto surface = box.render();
+  const auto texture = cinder::gl::Texture::create(surface);
+  cinder::gl::draw(texture, locp);
+}
+
+void MyApp::DrawGameOver() {
+  if (printed_game_over_) return;
+  const cinder::vec2 center = getWindowCenter();
+  const cinder::ivec2 size = {200, 50};
+  const cinder::Color color = cinder::Color::white();
+
+  PrintText("Game Over :(", color, size, center);
+  printed_game_over_ = true;
 }
 
 }  // namespace myapp

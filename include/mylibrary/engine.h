@@ -29,18 +29,21 @@ class Engine {
 
   void UpdateMovement(Movement movement);
 
+  bool IsGameOver();
+
  private:
   void AddTetrominoToScreen();
-  bool HasSurfaceContact();
   bool HasMovementConflict(int horizontal_amt, int vertical_amt);
   bool HasRotationConflict();
   bool ClearedRow();
+  void GenerateNewTetromino();
 
  private:
   const size_t width_;
   const size_t height_;
   std::vector<std::vector<bool>> screen_;
   Tetromino tetromino_;
+  bool game_over_;
 };
 
 }   //namespace mylibrary

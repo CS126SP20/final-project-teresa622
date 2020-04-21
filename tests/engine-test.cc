@@ -30,9 +30,11 @@ TEST_CASE("Screen updates with placed tetrominoes") {
   mylibrary::Engine engine(5, 5);
 
   //Move the current tetromino down the screen
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < 4; i++) {
     engine.UpdateMovement(mylibrary::Movement::kDown);
   }
+
+  engine.Step();
 
   std::vector<std::vector<bool>> screen = engine.GetScreen();
   size_t pixel_count = 0;
