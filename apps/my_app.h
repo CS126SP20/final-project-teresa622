@@ -4,9 +4,9 @@
 #define FINALPROJECT_APPS_MYAPP_H_
 
 #include <cinder/app/App.h>
-#include <mylibrary/leaderboard.h>
-#include <mylibrary/tetromino.h>
 
+#include "mylibrary/leaderboard.h"
+#include "mylibrary/tetromino.h"
 #include "mylibrary/engine.h"
 
 namespace myapp {

@@ -24,6 +24,7 @@ void Engine::Step() {
 }
 
 void Engine::AddTetrominoToScreen() {
+  //Make each location where the tetromino landed as true in our screen
   for (int i = 0; i < kPixelsInTetromino; i ++) {
     int x_loc = tetromino_.GetPixelLocation(i).Row();
     int y_loc = tetromino_.GetPixelLocation(i).Col();
@@ -32,6 +33,8 @@ void Engine::AddTetrominoToScreen() {
 }
 
 void Engine::UpdateMovement(Movement movement) {
+  //In every case, check first if this intended movement is illegal.
+  //If not, then proceed to move the tetromino
   switch (movement) {
     case Movement::kLeft:
       if (!HasMovementConflict(-1, 0)) {
@@ -47,16 +50,31 @@ void Engine::UpdateMovement(Movement movement) {
       if (!HasMovementConflict(0, 1)) {
         tetromino_.MoveTetromino(0, 1);
       }
+
+      //Downward movement needs to check for potentially falling on a surface
+      //or clearing a row
+      if (HasSurfaceContact()) {
+        ClearedRow();
+      }
       break;
     case Movement::kRotate:
       if (!HasRotationConflict()) {
         tetromino_.RotateTetromino();
       }
       break;
-  }
+    case Movement::kFall:
+      bool fallen = HasMovementConflict(0, 1);
+      while (!fallen) {
+        tetromino_.MoveTetromino(0, 1);
+        fallen = HasMovementConflict(0, 1);
+      }
 
-  if (HasSurfaceContact()) {
-    ClearedRow();
+      //Fall also need to check for surface contact because it's successive
+      //kDowns essentially
+      if (HasSurfaceContact()) {
+        ClearedRow();
+      }
+      break;
   }
 }
 

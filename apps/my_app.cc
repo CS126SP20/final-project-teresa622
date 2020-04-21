@@ -1,12 +1,11 @@
 // Copyright (c) 2020 [Your Name]. All rights reserved.
 
-#include "my_app.h"
-
 #include <cinder/app/App.h>
 #include <cinder/gl/draw.h>
 #include <cinder/gl/gl.h>
 #include <gflags/gflags.h>
 
+#include "my_app.h"
 #include "mylibrary/engine.h"
 
 namespace myapp {
@@ -22,6 +21,7 @@ MyApp::MyApp()
     leaderboard_{cinder::app::getAssetPath(kDbPath).string()},
     tile_size_{FLAGS_tilesize},
     username_{FLAGS_name},
+    //750 ms is the starting speed of the tetrominoes dropping
     speed_{750} {}
 
 void MyApp::setup() {
@@ -74,6 +74,11 @@ void MyApp::keyDown(KeyEvent event) {
     case KeyEvent::KEY_l:
     case KeyEvent::KEY_d: {
       engine_.UpdateMovement(mylibrary::Movement::kRight);
+      break;
+    }
+
+    case KeyEvent::KEY_SPACE: {
+      engine_.UpdateMovement(mylibrary::Movement::kFall);
       break;
     }
 

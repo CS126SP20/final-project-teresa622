@@ -7,7 +7,7 @@
 namespace mylibrary {
 
 //Represents the possible key actions of the tetromino
-enum class Movement { kLeft, kRight, kRotate, kDown };
+enum class Movement { kLeft, kRight, kRotate, kDown, kFall };
 
 }   // namespace mylibrary
 #endif  // FINALPROJECT_INCLUDE_MYLIBRARY_DIRECTION_H_

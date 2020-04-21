@@ -4,7 +4,9 @@
 
 #ifndef FINALPROJECT_SRC_TETROMINO_H_
 #define FINALPROJECT_SRC_TETROMINO_H_
+
 #include <vector>
+
 #include "mylibrary/location.h"
 #include "mylibrary/tetromino_type.h"
 
