@@ -9,8 +9,10 @@
 namespace mylibrary {
 
 Engine::Engine(size_t width, size_t height)
-    : width_{width}, height_{height}, tetromino_(width / 2){
+    : width_{width}, height_{height}, tetromino_(width / 2) {
   screen_.resize(height, std::vector<bool>( width,false ));
+  game_over_ = false;
+  score_ = 0;
 }
 
 void Engine::Step() {
@@ -113,6 +115,8 @@ bool Engine::ClearedRow() {
     screen_.insert(screen_.begin(), std::vector<bool>(width_,false));
   }
 
+  score_ += rows_cleared;
+
   return true;
 }
 
@@ -174,6 +178,10 @@ std::vector<std::vector<bool>> Engine::GetScreen() {
 
 bool Engine::IsGameOver() {
   return game_over_;
+}
+
+size_t Engine::GetScore() {
+  return score_;
 }
 
 }   // namespace mylibrary

@@ -7,8 +7,8 @@
 
 #include <vector>
 
+#include "movement.h"
 #include "mylibrary/tetromino.h"
-#include "mylibrary/movement.h"
 
 namespace mylibrary {
 
@@ -31,6 +31,8 @@ class Engine {
 
   bool IsGameOver();
 
+  size_t GetScore();
+
  private:
   void AddTetrominoToScreen();
   bool HasMovementConflict(int horizontal_amt, int vertical_amt);
@@ -44,6 +46,7 @@ class Engine {
   std::vector<std::vector<bool>> screen_;
   Tetromino tetromino_;
   bool game_over_;
+  size_t score_;
 };
 
 }   //namespace mylibrary

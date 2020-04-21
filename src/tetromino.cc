@@ -24,7 +24,6 @@ Tetromino::Tetromino(int center_tile) {
 Tetromino::Tetromino(int center_tile, TetrominoType tetromino_type) {
   tetromino_type_ = tetromino_type;
   InitializePixels_(center_tile);
-  FindContactPixels();
 }
 
 void Tetromino::InitializePixels_(int center_tile) {
@@ -68,10 +67,10 @@ void Tetromino::GenerateS(int center_tile) {
 }
 
 void Tetromino::GenerateT(int center_tile) {
-  pixels[0] = {center_tile - 1, 0};
-  pixels[1] = {center_tile, 0};
-  pixels[2] = {center_tile + 1, 0};
-  pixels[3] = {center_tile, 1};
+  pixels[0] = {center_tile - 1, 1};
+  pixels[1] = {center_tile, 1};
+  pixels[2] = {center_tile + 1, 1};
+  pixels[3] = {center_tile, 0};
 }
 
 void Tetromino::GenerateO(int center_tile) {
@@ -126,8 +125,6 @@ void Tetromino::RotateTetromino() {
     pixel = Location((rotation_point_x + rotation_point_y) - pixel.Col(),
                      (rotation_point_y - rotation_point_x) + pixel.Row());
   }
-
-  rotated = true;
 }
 
 Location Tetromino::GetRotationPoint() {
@@ -136,52 +133,6 @@ Location Tetromino::GetRotationPoint() {
 
 TetrominoType Tetromino::GetTetrominoType() {
   return tetromino_type_;
-}
-
-std::vector<int> Tetromino::FindContactPixels() {
-  //If tetromino is not rotated, there is no need
-  //to recalculate the contact indexes
-  if (!rotated) {
-    return contact_pixel_indexes;
-  }
-
-  //The tetromino was rotated. Clear our current contact indexes and recalculate
-  contact_pixel_indexes.clear();
-  std::vector<int> checked_indexes;
-
-  for (int i = 0; i < kPixelsInTetromino; i++) {
-    //Check if we have already evaluates this pixel
-    if (std::find(checked_indexes.begin(), checked_indexes.end(), i)
-    != checked_indexes.end()) {
-      continue;
-    }
-
-    //Else add it to our checked indexes
-    checked_indexes.push_back(i);
-    Location contact_pixel = pixels[i];
-    size_t pixel_index = i;
-
-    //Loop through the pixels and determine if this is the lowest pixel
-    //in this column
-    for (int j = i; j < kPixelsInTetromino; j++) {
-      if (pixels[j].Row() == contact_pixel.Row()) {
-
-        //We've checked this pixel now, regardless if it's the contact or not
-        checked_indexes.push_back(j);
-        if (pixels[j].Col() > contact_pixel.Col()) {
-          contact_pixel = pixels[j];
-          pixel_index = j;
-        }
-      }
-    }
-
-    //Add this row's contact pixel into our vector
-    contact_pixel_indexes.push_back(pixel_index);
-  }
-
-  //Reset rotated boolean to avoid recalculation
-  rotated = false;
-  return contact_pixel_indexes;
 }
 
 }

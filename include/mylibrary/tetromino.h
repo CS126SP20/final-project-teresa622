@@ -11,6 +11,7 @@
 #include "mylibrary/tetromino_type.h"
 
 namespace mylibrary {
+
 const size_t kPixelsInTetromino = 4;
 const size_t kNumTetrominoTypes = 7;
 const size_t rotation_point_index = 1;
@@ -29,7 +30,6 @@ class Tetromino {
   void RotateTetromino();
   Location GetRotationPoint();
   TetrominoType GetTetrominoType();
-  std::vector<int> FindContactPixels();
 
  private:
   void InitializePixels_(int center_tile);
@@ -44,8 +44,6 @@ class Tetromino {
  private:
   Location pixels[4] = {Location(0,0), Location(0,0),
                         Location(0,0), Location(0,0)};
-  std::vector<int> contact_pixel_indexes;
-  bool rotated = true;
   TetrominoType tetromino_type_;
 };
 

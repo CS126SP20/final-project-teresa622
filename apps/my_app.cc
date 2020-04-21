@@ -14,6 +14,7 @@
 namespace myapp {
 
 const char kDbPath[] = "tetris.db";
+const int kLimit = 3;
 
 #if defined(CINDER_COCOA_TOUCH)
 const char kNormalFont[] = "Arial";
@@ -47,6 +48,18 @@ void MyApp::setup() {
 }
 
 void MyApp::update() {
+  if (game_over) {
+    if (top_players_.empty() && top_personal_scores.empty()) {
+      leaderboard_.AddScoreToLeaderBoard({username_, engine_.GetScore()});
+      top_players_ = leaderboard_.RetrieveHighScores(kLimit);
+      top_personal_scores = leaderboard_.RetrieveHighScores({username_, engine_.GetScore()}, kLimit);
+
+      // It is crucial the this vector be populated, given that `kLimit` > 0.
+      assert(!top_players_.empty());
+      assert(!top_personal_scores.empty());
+    }
+  }
+
   const auto time = std::chrono::system_clock::now();
   if (time - last_time_ > std::chrono::milliseconds(speed_)) {
     engine_.Step();
@@ -59,7 +72,10 @@ void MyApp::draw() {
   cinder::gl::enableAlphaBlending();
 
   if (engine_.IsGameOver() && game_over) {
-    if (!printed_game_over_) cinder::gl::clear(cinder::Color(1, 0, 0));
+    if (!printed_game_over_) {
+      cinder::gl::clear(cinder::Color(1, 0, 0));
+    }
+
     DrawGameOver();
     return;
   } else if (engine_.IsGameOver() && !game_over) {
@@ -179,11 +195,30 @@ void PrintText(const std::string& text, const C& color, const cinder::ivec2& siz
 
 void MyApp::DrawGameOver() {
   if (printed_game_over_) return;
-  const cinder::vec2 center = getWindowCenter();
+  if (top_players_.empty()) return;
+
+  const cinder::vec2 center = {getWindowCenter().x, 40};
   const cinder::ivec2 size = {200, 50};
   const cinder::Color color = cinder::Color::white();
 
+  size_t row = 1;
+
   PrintText("Game Over :(", color, size, center);
+  PrintText("High Scores", color, size,
+      {center.x, center.y + (++row) * 50});
+  for (const  mylibrary::Player& player : top_players_) {
+    std::stringstream ss;
+    ss << player.name << " - " << player.score;
+    PrintText(ss.str(), color, size, {center.x, center.y + (++row) * 50});
+  }
+
+  row++;
+
+  PrintText("Your Score", color, size,
+      {center.x, center.y + (++row) * 50});
+  PrintText(std::to_string(engine_.GetScore()), color, size,
+      {center.x, center.y + (++row) * 50});
+
   printed_game_over_ = true;
 }
 

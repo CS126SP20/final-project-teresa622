@@ -5,9 +5,10 @@
 
 #include <cinder/app/App.h>
 
+#include "mylibrary/player.h"
+#include "mylibrary/engine.h"
 #include "mylibrary/leaderboard.h"
 #include "mylibrary/tetromino.h"
-#include "mylibrary/engine.h"
 
 namespace myapp {
 const size_t kWidth = 12;
@@ -32,6 +33,8 @@ class MyApp : public cinder::app::App {
   mylibrary::LeaderBoard leaderboard_;
   size_t tile_size_;
   std::string username_;
+  std::vector<mylibrary::Player> top_players_;
+  std::vector<mylibrary::Player> top_personal_scores;
   size_t speed_;
   bool printed_game_over_;
   bool game_over;

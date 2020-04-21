@@ -32,13 +32,6 @@ TEST_CASE("Tetromino I") {
     tetromino.MoveTetromino(-3, -1);
     REQUIRE(tetromino.GetPixelLocation(0) == mylibrary::Location(0, 0));
   }
-
-  SECTION("Get Contact Pixels") {
-    //The contact pixel should be the last one since it's an I
-    std::vector<int> contact_indexes = tetromino.FindContactPixels();
-    REQUIRE(std::find(contact_indexes.begin(), contact_indexes.end(), 3)
-    != contact_indexes.end());
-  }
 }
 
 TEST_CASE("Tetromino J") {
@@ -58,15 +51,6 @@ TEST_CASE("Tetromino J") {
   SECTION("Get Tetromino Type") {
     REQUIRE(tetromino.GetTetrominoType() == mylibrary::TetrominoType::kJ);
   }
-
-  SECTION("Get Contact Pixels") {
-    //The contact pixel should be the last two, the hook and the bottom of J
-    std::vector<int> contact_indexes = tetromino.FindContactPixels();
-    for (int i = 2; i < 4; i++) {
-      REQUIRE(std::find(contact_indexes.begin(), contact_indexes.end(), i)
-                  != contact_indexes.end());
-    }
-  }
 }
 
 TEST_CASE("Tetromino L") {
@@ -80,15 +64,6 @@ TEST_CASE("Tetromino L") {
                                      mylibrary::Location(6, 2)};
     for (int i = 0; i < 4; i++) {
       REQUIRE(tetromino.GetPixelLocation(i) == pixels[i]);
-    }
-  }
-
-  SECTION("Get Contact Pixels") {
-    //The contact pixel should be the last two, the hook and the bottom of L
-    std::vector<int> contact_indexes = tetromino.FindContactPixels();
-    for (int i = 2; i < 4; i++) {
-      REQUIRE(std::find(contact_indexes.begin(), contact_indexes.end(), i)
-                  != contact_indexes.end());
     }
   }
 }
@@ -106,25 +81,6 @@ TEST_CASE("Tetromino O") {
       REQUIRE(tetromino.GetPixelLocation(i) == pixels[i]);
     }
   }
-
-  SECTION("Get Contact Pixels") {
-    //The contact pixel should be the last two, the bottom of the square
-    std::vector<int> contact_indexes = tetromino.FindContactPixels();
-    for (int i = 2; i < 4; i++) {
-      REQUIRE(std::find(contact_indexes.begin(), contact_indexes.end(), i)
-                  != contact_indexes.end());
-    }
-
-    //Contact pixels after rotation tested here
-    //The contact pixels should not change since O does not change
-    //when rotated
-    tetromino.RotateTetromino();
-    contact_indexes = tetromino.FindContactPixels();
-    REQUIRE(std::find(contact_indexes.begin(), contact_indexes.end(), 3)
-                  != contact_indexes.end());
-    REQUIRE(std::find(contact_indexes.begin(), contact_indexes.end(), 2)
-                != contact_indexes.end());
-  }
 }
 
 TEST_CASE("Tetromino T") {
@@ -132,10 +88,10 @@ TEST_CASE("Tetromino T") {
       (5, mylibrary::TetrominoType::kT);
 
   SECTION("Initializing T") {
-    mylibrary::Location pixels[4] = {mylibrary::Location(4, 0),
-                                     mylibrary::Location (5, 0),
-                                     mylibrary::Location(6, 0),
-                                     mylibrary::Location(5, 1)};
+    mylibrary::Location pixels[4] = {mylibrary::Location(4, 1),
+                                     mylibrary::Location (5, 1),
+                                     mylibrary::Location(6, 1),
+                                     mylibrary::Location(5, 0)};
     for (int i = 0; i < 4; i++) {
       REQUIRE(tetromino.GetPixelLocation(i) == pixels[i]);
     }
@@ -144,25 +100,13 @@ TEST_CASE("Tetromino T") {
   //Rotation of Tetromino tested here
   SECTION("Rotate Tetromino") {
     tetromino.RotateTetromino();
-    mylibrary::Location pixels[4] = {mylibrary::Location(5, -1),
-                                     mylibrary::Location (5, 0),
-                                     mylibrary::Location(5, 1),
-                                     mylibrary::Location(4, 0)};
+    mylibrary::Location pixels[4] = {mylibrary::Location(5, 0),
+                                     mylibrary::Location (5, 1),
+                                     mylibrary::Location(5, 2),
+                                     mylibrary::Location(6, 1)};
     for (int i = 0; i < 4; i++) {
       REQUIRE(tetromino.GetPixelLocation(i) == pixels[i]);
     }
-  }
-
-  //Getting contact pixels after rotation tested here
-  SECTION("Get Contact Pixels") {
-    //The original state of T has it so that it has 3 contact pixels
-    std::vector<int> contact_indexes = tetromino.FindContactPixels();
-    REQUIRE(contact_indexes.size() == 3);
-
-    //After rotating, T should now only have 3 contact pixels
-    tetromino.RotateTetromino();
-    contact_indexes = tetromino.FindContactPixels();
-    REQUIRE(contact_indexes.size() == 2);
   }
 }
 
@@ -179,17 +123,6 @@ TEST_CASE("Tetromino S") {
       REQUIRE(tetromino.GetPixelLocation(i) == pixels[i]);
     }
   }
-
-  SECTION("Get Contact Pixels") {
-    //The original state of S has it so that it has 3 contact pixels
-    std::vector<int> contact_indexes = tetromino.FindContactPixels();
-    REQUIRE(contact_indexes.size() == 3);
-
-    //After rotating, S should now only have 3 contact pixels
-    tetromino.RotateTetromino();
-    contact_indexes = tetromino.FindContactPixels();
-    REQUIRE(contact_indexes.size() == 2);
-  }
 }
 
 TEST_CASE("Tetromino Z") {
@@ -204,16 +137,5 @@ TEST_CASE("Tetromino Z") {
     for (int i = 0; i < 4; i++) {
       REQUIRE(tetromino.GetPixelLocation(i) == pixels[i]);
     }
-  }
-
-  SECTION("Get Contact Pixels") {
-    //The original state of Z has it so that it has 3 contact pixels
-    std::vector<int> contact_indexes = tetromino.FindContactPixels();
-    REQUIRE(contact_indexes.size() == 3);
-
-    //After rotating, Z should now only have 3 contact pixels
-    tetromino.RotateTetromino();
-    contact_indexes = tetromino.FindContactPixels();
-    REQUIRE(contact_indexes.size() == 2);
   }
 }
