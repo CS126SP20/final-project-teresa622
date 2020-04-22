@@ -97,7 +97,7 @@ void MyApp::draw() {
   }
 
   //Redraw the screen with a new updated frame
-  cinder::gl::clear();
+  cinder::gl::clear(cinder::Color(1, 1, 1));
   DrawTetromino();
   DrawScreen();
 }
@@ -146,7 +146,7 @@ void MyApp::DrawTetromino() {
   //Loop through each pixel and draw it in our app
   for (int i = 0; i < 4; i++) {
     mylibrary::Location loc = tetromino.GetPixelLocation(i);
-    cinder::gl::color(0, 1, 0);
+    cinder::gl::color(tetromino.GetColor());
 
     //If this location is above the screen, don't draw it
     if (loc.Col() < 0) {
@@ -163,18 +163,19 @@ void MyApp::DrawScreen() {
   //Credit for syntax for looping through a 2D vector:
   //https://stackoverflow.com/questions/1784573/iterator-for-2d-vector?rq=1
   //Answered by Austin Hyde
-  std::vector<std::vector<bool>> screen = engine_.GetScreen();
-  std::vector< std::vector<bool> >::const_iterator row;
-  std::vector<bool>::const_iterator col;
+  std::vector<std::vector<cinder::Color>> screen = engine_.GetScreen();
+  std::vector< std::vector<cinder::Color> >::const_iterator row;
+  std::vector<cinder::Color>::const_iterator col;
   size_t x_index = 0;
   size_t y_index = 0;
 
   for (row = screen.begin(); row != screen.end(); ++row) {
     for (col = row->begin(); col != row->end(); ++col) {
-      //Color the 'true' elements in the 2D vector > those are the the pixels
+      //Color the non-white elements in the 2D vector > those are the the pixels
       //that have already touched a surface
-      if (*col) {
-        cinder::gl::color(0, 1, 0);
+      if (*col != cinder::Color(1,1,1)) {
+        cinder::gl::color(*col);
+        //cinder::gl::color(0, 1, 0);
         cinder::gl::drawSolidRect(cinder::Rectf(x_index * tile_size_,
             y_index * tile_size_,(x_index * tile_size_) + tile_size_,
             (y_index * tile_size_) + tile_size_));

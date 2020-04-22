@@ -71,12 +71,20 @@ TEST_CASE("Tetromino L") {
 TEST_CASE("Tetromino O") {
   mylibrary::Tetromino tetromino
       (5, mylibrary::TetrominoType::kO);
+  mylibrary::Location pixels[4] = {mylibrary::Location(4, 0),
+                                   mylibrary::Location (5, 0),
+                                   mylibrary::Location(4, 1),
+                                   mylibrary::Location(5, 1)};
 
   SECTION("Initializing O") {
-    mylibrary::Location pixels[4] = {mylibrary::Location(4, 0),
-                                     mylibrary::Location (5, 0),
-                                     mylibrary::Location(4, 1),
-                                     mylibrary::Location(5, 1)};
+    for (int i = 0; i < 4; i++) {
+      REQUIRE(tetromino.GetPixelLocation(i) == pixels[i]);
+    }
+  }
+
+  SECTION("Rotating O") {
+    //Rotating O should not move any of the pixels
+    tetromino.RotateTetromino();
     for (int i = 0; i < 4; i++) {
       REQUIRE(tetromino.GetPixelLocation(i) == pixels[i]);
     }
@@ -100,6 +108,9 @@ TEST_CASE("Tetromino T") {
   //Rotation of Tetromino tested here
   SECTION("Rotate Tetromino") {
     tetromino.RotateTetromino();
+    //The rotation point for T tetromino is the center joint that connects
+    //the three other pixels
+    REQUIRE(tetromino.GetRotationPoint() == mylibrary::Location(5, 1));
     mylibrary::Location pixels[4] = {mylibrary::Location(5, 0),
                                      mylibrary::Location (5, 1),
                                      mylibrary::Location(5, 2),

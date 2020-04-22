@@ -17,7 +17,9 @@ Tetromino::Tetromino(int center_tile) {
 
   /* using nano-seconds instead of seconds */
   srand((time_t)ts.tv_nsec);
-  tetromino_type_ = kTetrominoTypes[rand() % kNumTetrominoTypes];
+  int random_num = rand() % kNumTetrominoTypes;
+  tetromino_type_ = kTetrominoTypes[random_num];
+  color_ = kColors[random_num];
   InitializePixels(center_tile);
 }
 
@@ -138,6 +140,10 @@ TetrominoType Tetromino::GetTetrominoType() {
 
 Location Tetromino::GetPixelLocation(size_t index) {
   return pixels[index];
+}
+
+cinder::Color Tetromino::GetColor() {
+  return color_;
 }
 
 }

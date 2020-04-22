@@ -6,7 +6,7 @@
 #define FINALPROJECT_SRC_ENGINE_H_
 
 #include <vector>
-
+#include <cinder/Color.h>
 #include "movement.h"
 #include "mylibrary/tetromino.h"
 
@@ -15,9 +15,10 @@ namespace mylibrary {
 //The number of pixels in every tetromino piece
 const size_t kPixelsInTetromino = 4;
 
+const cinder::Color kWhite(1, 1, 1);
+
 class Engine {
  public:
-
   /**
    * Engine constructor. Creates a new game engine with the given screen
    * parameters
@@ -47,7 +48,7 @@ class Engine {
   Tetromino GetTetromino();
   //Returns the screen, which contains all the tetrominoes that have already
   //landed on a surface.
-  std::vector<std::vector<bool>> GetScreen();
+  std::vector<std::vector<cinder::Color>> GetScreen();
   bool IsGameOver();
   size_t GetScore();
 
@@ -92,7 +93,7 @@ class Engine {
   const size_t height_;
 
   //Stores all the fallen tetrominoes. Used by the app to draw.
-  std::vector<std::vector<bool>> screen_;
+  std::vector<std::vector<cinder::Color>> screen_;
 
   Tetromino tetromino_;
   bool game_over_;

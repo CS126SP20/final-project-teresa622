@@ -9,6 +9,7 @@
 
 #include "mylibrary/location.h"
 #include "mylibrary/tetromino_type.h"
+#include <cinder/Color.h>
 
 namespace mylibrary {
 
@@ -24,6 +25,16 @@ const TetrominoType kTetrominoTypes[kNumTetrominoTypes] =
      TetrominoType::kL, TetrominoType::kO,
      TetrominoType::kT, TetrominoType::kS,
      TetrominoType::kZ};
+
+//The color theme of the tetrominoes corresponding to the tetromino types array
+const cinder::Color kColors[kNumTetrominoTypes] =
+    {cinder::Color(0.80, 0.60, 0.79),
+     cinder::Color(0.62, 0.76, 0.81),
+     cinder::Color(0.62, 0.88, 0.62),
+     cinder::Color(1, 0.72, 0.17),
+     cinder::Color(1, 0.40, 0.39),
+     cinder::Color(1, 0.71, 0.71),
+     cinder::Color(1, 0.91,0.37)};
 
 class Tetromino {
  public:
@@ -57,6 +68,7 @@ class Tetromino {
   Location GetPixelLocation(size_t index);
   Location GetRotationPoint();
   TetrominoType GetTetrominoType();
+  cinder::Color GetColor();
 
  private:
   /**
@@ -83,6 +95,9 @@ class Tetromino {
 
   //Saves the type of tetromino this instance is
   TetrominoType tetromino_type_;
+
+  //The color of the tetromino piece
+  cinder::Color color_;
 };
 
 }

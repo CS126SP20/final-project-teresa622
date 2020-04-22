@@ -42,4 +42,5 @@ class Location {
 std::ostream& operator<<(std::ostream& os, const Location& location);
 
 }  // namespace mylibrary
+
 #endif  // FINALPROJECT_SRC_LOCATION_H_

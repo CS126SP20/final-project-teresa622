@@ -10,7 +10,7 @@ namespace mylibrary {
 
 Engine::Engine(size_t width, size_t height)
     : width_{width}, height_{height}, tetromino_(width / 2) {
-  screen_.resize(height, std::vector<bool>( width,false ));
+  screen_.resize(height, std::vector<cinder::Color>( width, kWhite));
   game_over_ = false;
   score_ = 0;
 }
@@ -52,7 +52,7 @@ void Engine::GenerateNewTetromino() {
 }
 
 void Engine::AddTetrominoToScreen() {
-  //Make each location where the tetromino landed as 'true' in our screen
+  //Make each location where the tetromino landed with its color
   for (int i = 0; i < kPixelsInTetromino; i ++) {
     int x_loc = tetromino_.GetPixelLocation(i).Row();
     int y_loc = tetromino_.GetPixelLocation(i).Col();
@@ -62,7 +62,7 @@ void Engine::AddTetrominoToScreen() {
       continue;
     }
 
-    screen_[y_loc][x_loc] = true;
+    screen_[y_loc][x_loc] = tetromino_.GetColor();
   }
 }
 
@@ -109,8 +109,8 @@ bool Engine::ClearedRow() {
   //Loop through each row and check if it is full (can be cleared)
   for (auto row = screen_.begin(); row != screen_.end(); ++row) {
 
-    //If this row has all true values, it can be cleared
-    if (!(std::find(row->begin(), row->end(), false) != row->end())) {
+    //If this row has all color values, it can be cleared
+    if (!(std::find(row->begin(), row->end(), kWhite) != row->end())) {
       screen_.erase(row--);
       rows_cleared++;
     }
@@ -123,7 +123,8 @@ bool Engine::ClearedRow() {
   //Add in empty rows for the rows we cleared. We want to keep screen_ the
   //same size
   for (int i = 0; i < rows_cleared; i++) {
-    screen_.insert(screen_.begin(), std::vector<bool>(width_,false));
+    screen_.insert(screen_.begin(),
+        std::vector<cinder::Color>(width_,kWhite));
   }
 
   //The number of rows cleared is added to our score.
@@ -147,7 +148,7 @@ bool Engine::HasMovementConflict(int horizontal_amt, int vertical_amt) {
     //This movement is illegal if it goes below the screen or past the
     //vertical bounds of the screen
     if (pixel_col > height_ - 1 || pixel_row < 0 || pixel_row > width_ - 1
-        || screen_[pixel_col][pixel_row]) {
+        || screen_[pixel_col][pixel_row] != kWhite) {
       return true;
     }
   }
@@ -177,7 +178,7 @@ bool Engine::HasRotationConflict() {
     }
 
     //Check if it conflicts with any other tetrominoes
-    if (screen_[x_loc][y_loc]) {
+    if (screen_[x_loc][y_loc] != kWhite) {
       return true;
     }
   }
@@ -190,7 +191,7 @@ Tetromino Engine::GetTetromino() {
   return tetromino_;
 }
 
-std::vector<std::vector<bool>> Engine::GetScreen() {
+std::vector<std::vector<cinder::Color>> Engine::GetScreen() {
   return screen_;
 }
 
