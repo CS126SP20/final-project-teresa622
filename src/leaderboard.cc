@@ -9,6 +9,7 @@
 #include "mylibrary/player.h"
 
 namespace mylibrary {
+
 LeaderBoard::LeaderBoard(const std::string& db_path) : db_{db_path} {
   db_ << "CREATE TABLE if not exists leaderboard (\n"
          "  name  TEXT NOT NULL,\n"
@@ -48,17 +49,4 @@ std::vector<Player> LeaderBoard::RetrieveHighScores(const size_t limit) {
   }
 }
 
-std::vector<Player> LeaderBoard::RetrieveHighScores(const Player& player,
-                                               const size_t limit) {
-  try {
-    auto rows = db_ << u"SELECT name,score FROM leaderboard WHERE name "
-                       "LIKE (?) ORDER BY score DESC LIMIT (?);"
-                    << player.name
-                    << limit;
-
-    return GetPlayers(&rows);
-  } catch (const std::exception& e) {
-    std::cerr << "Query error at retrieve player's high scores";
-  }
-}
 }

@@ -28,22 +28,31 @@ void Engine::Step() {
     GenerateNewTetromino();
   }
 
+  //Clear any rows that have been filled
   ClearedRow();
 }
 
 void Engine::GenerateNewTetromino() {
+  //Add our current tetromino to the screen and create a new one.
   AddTetrominoToScreen();
   tetromino_ = Tetromino(width_ / 2);
+
+  //Determine if the newly generated tetromino immediately causes conflict
+  //with the other tetrominoes on the screen.
   if (HasMovementConflict(0, 0)) {
+
+    //The tetromino is resting half on the screen and half off.
     tetromino_.MoveTetromino(0, -1);
     if (HasMovementConflict(0, 0)) {
+
+      //The tetromino is completely above the screen so the game is over.
       game_over_ = true;
     }
   }
 }
 
 void Engine::AddTetrominoToScreen() {
-  //Make each location where the tetromino landed as true in our screen
+  //Make each location where the tetromino landed as 'true' in our screen
   for (int i = 0; i < kPixelsInTetromino; i ++) {
     int x_loc = tetromino_.GetPixelLocation(i).Row();
     int y_loc = tetromino_.GetPixelLocation(i).Col();
@@ -52,6 +61,7 @@ void Engine::AddTetrominoToScreen() {
     if (y_loc < 0) {
       continue;
     }
+
     screen_[y_loc][x_loc] = true;
   }
 }
@@ -96,6 +106,7 @@ void Engine::UpdateMovement(Movement movement) {
 bool Engine::ClearedRow() {
   size_t rows_cleared = 0;
 
+  //Loop through each row and check if it is full (can be cleared)
   for (auto row = screen_.begin(); row != screen_.end(); ++row) {
 
     //If this row has all true values, it can be cleared
@@ -115,22 +126,26 @@ bool Engine::ClearedRow() {
     screen_.insert(screen_.begin(), std::vector<bool>(width_,false));
   }
 
+  //The number of rows cleared is added to our score.
   score_ += rows_cleared;
 
   return true;
 }
 
 bool Engine::HasMovementConflict(int horizontal_amt, int vertical_amt) {
+  //Loop through each pixel and determine if this movement is legal
   for (int i = 0; i < kPixelsInTetromino; i++) {
     int pixel_row = tetromino_.GetPixelLocation(i).Row() + horizontal_amt;
     int pixel_col = tetromino_.GetPixelLocation(i).Col() + vertical_amt;
 
     //If this pixel is above the screen, disregard it. It will be handled by
-    //game ending mechanism
+    //game ending detector
     if (pixel_col < 0) {
       continue;
     }
 
+    //This movement is illegal if it goes below the screen or past the
+    //vertical bounds of the screen
     if (pixel_col > height_ - 1 || pixel_row < 0 || pixel_row > width_ - 1
         || screen_[pixel_col][pixel_row]) {
       return true;
@@ -141,6 +156,8 @@ bool Engine::HasMovementConflict(int horizontal_amt, int vertical_amt) {
 }
 
 bool Engine::HasRotationConflict() {
+  //If the tetromino is O, there is no rotation. > return true so that it
+  //won't be rotated.
   if (tetromino_.GetTetrominoType() == TetrominoType::kO) {
     return true;
   }
@@ -159,7 +176,7 @@ bool Engine::HasRotationConflict() {
       return true;
     }
 
-    //Check if it conflicts with any tetrominoes
+    //Check if it conflicts with any other tetrominoes
     if (screen_[x_loc][y_loc]) {
       return true;
     }
@@ -168,6 +185,7 @@ bool Engine::HasRotationConflict() {
   return false;
 }
 
+//Game engine getters
 Tetromino Engine::GetTetromino() {
   return tetromino_;
 }

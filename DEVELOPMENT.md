@@ -1,12 +1,15 @@
 # Development
 
 ---
+- **4/21/20**  Added the scoring and end game features of Tetris
+    - Work on more stretch goals for the upcoming week.
+    - Continue to test more of the testable functionalities.
 - **4/20/20**(hehe) Implemented line clearing functionality
     - [ ] Figure out how to not have more than 3 of the same tetromino in a row. Or should it be completely random..?
     - [ ] Add color to the tetrominoes. Maybe this functionality will be implemented in the farther future.
+    - [X] Figure out how to end the game if the player reaches the top of the screen
+    - [X] Implement more scoring functionalities with the database
     * Continue to keep testing more
-    * Figure out how to end the game if the player reaches the top of the screen
-    * Implement more scoring functionalities with the database
 - **4/19/20** Implemented rotation functionality
     * Consider modifying the rotation of L tetromino
     * Test more of tetromino

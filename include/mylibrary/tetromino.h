@@ -12,9 +12,13 @@
 
 namespace mylibrary {
 
-const size_t kPixelsInTetromino = 4;
+//The constant number of types of tetrominoes
 const size_t kNumTetrominoTypes = 7;
+
+//The rotation point is always the 2nd element in our array
 const size_t rotation_point_index = 1;
+
+//The list of different tetromino types
 const TetrominoType kTetrominoTypes[kNumTetrominoTypes] =
     {TetrominoType::kI, TetrominoType::kJ,
      TetrominoType::kL, TetrominoType::kO,
@@ -23,16 +27,47 @@ const TetrominoType kTetrominoTypes[kNumTetrominoTypes] =
 
 class Tetromino {
  public:
+  /**
+   * Tetromino constructor. Used by the game engine to create a new tetromino.
+   * @param center_tile the location of the center tile so our tetromino can be
+   * placed in the middle of the screen.
+   */
   explicit Tetromino(int center_tile);
+
+  /**
+   * Tetromino constructor. Used mostly for testing.
+   * @param center_tile the location of the center of the screen width-wise
+   * @param tetromino_type the type of tetromino that should be created.
+   */
   Tetromino(int center_tile, TetrominoType tetromino_type);
-  Location GetPixelLocation(size_t index);
+
+  /**
+   * Translate each pixel of our tetromino
+   * @param horizontal_amount the horizontal amount our tetromino should move
+   * @param vertical_amount the vertical amount our tetromino should move
+   */
   void MoveTetromino(int horizontal_amount, int vertical_amount);
+
+  /**
+   * Rotates our tetromino around the rotation point
+   */
   void RotateTetromino();
+
+  //Tetromino getters
+  Location GetPixelLocation(size_t index);
   Location GetRotationPoint();
   TetrominoType GetTetrominoType();
 
  private:
-  void InitializePixels_(int center_tile);
+  /**
+   * Initializes the location of each pixel in our tetromino depending on the
+   * tetromino type.
+   * Constructor helper function
+   * @param center_tile the center of our screen width-wise
+   */
+  void InitializePixels(int center_tile);
+
+  //Generates each type of tetromino
   void GenerateI(int center_tile);
   void GenerateJ(int center_tile);
   void GenerateL(int center_tile);
@@ -42,8 +77,11 @@ class Tetromino {
   void GenerateZ(int center_tile);
 
  private:
+  //Holds the Location of each pixel in our tetromino
   Location pixels[4] = {Location(0,0), Location(0,0),
                         Location(0,0), Location(0,0)};
+
+  //Saves the type of tetromino this instance is
   TetrominoType tetromino_type_;
 };
 

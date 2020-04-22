@@ -4,7 +4,9 @@
 
 #ifndef FINALPROJECT_SRC_LOCATION_H_
 #define FINALPROJECT_SRC_LOCATION_H_
+
 #include <ostream>
+
 namespace mylibrary {
 // Represents a location on the board.
 class Location {

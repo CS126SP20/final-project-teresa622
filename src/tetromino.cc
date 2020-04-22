@@ -18,15 +18,15 @@ Tetromino::Tetromino(int center_tile) {
   /* using nano-seconds instead of seconds */
   srand((time_t)ts.tv_nsec);
   tetromino_type_ = kTetrominoTypes[rand() % kNumTetrominoTypes];
-  InitializePixels_(center_tile);
+  InitializePixels(center_tile);
 }
 
 Tetromino::Tetromino(int center_tile, TetrominoType tetromino_type) {
   tetromino_type_ = tetromino_type;
-  InitializePixels_(center_tile);
+  InitializePixels(center_tile);
 }
 
-void Tetromino::InitializePixels_(int center_tile) {
+void Tetromino::InitializePixels(int center_tile) {
   switch (tetromino_type_) {
     case TetrominoType::kZ:
       GenerateZ(center_tile);
@@ -52,6 +52,7 @@ void Tetromino::InitializePixels_(int center_tile) {
   }
 }
 
+//Each different type of tetromino generated given the center_tile
 void Tetromino::GenerateZ(int center_tile) {
   pixels[0] = {center_tile + 1, 1};
   pixels[1] = {center_tile, 1};
@@ -101,11 +102,8 @@ void Tetromino::GenerateL(int center_tile) {
   pixels[3] = Location(center_tile + 1, 2);
 }
 
-Location Tetromino::GetPixelLocation(size_t index) {
-  return pixels[index];
-}
-
 void Tetromino::MoveTetromino(int horizontal_amount, int vertical_amount) {
+  //Loop through each pixel and moves it with the given amount
   for (auto& pixel : pixels) {
     pixel = Location(pixel.Row() + horizontal_amount,
         pixel.Col() + vertical_amount);
@@ -113,10 +111,12 @@ void Tetromino::MoveTetromino(int horizontal_amount, int vertical_amount) {
 }
 
 void Tetromino::RotateTetromino() {
+  //If the tetromino is type O, then rotation does nothing
   if (tetromino_type_ == TetrominoType::kO) {
     return;
   }
 
+  //Get the points of rotation from which each pixel will rotate around
   int rotation_point_x = pixels[rotation_point_index].Row();
   int rotation_point_y = pixels[rotation_point_index].Col();
 
@@ -127,12 +127,17 @@ void Tetromino::RotateTetromino() {
   }
 }
 
+//Tetromino getters
 Location Tetromino::GetRotationPoint() {
   return pixels[rotation_point_index];
 }
 
 TetrominoType Tetromino::GetTetrominoType() {
   return tetromino_type_;
+}
+
+Location Tetromino::GetPixelLocation(size_t index) {
+  return pixels[index];
 }
 
 }
