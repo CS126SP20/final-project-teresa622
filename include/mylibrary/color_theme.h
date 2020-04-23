@@ -59,5 +59,13 @@ const cinder::Color kThemes[kNumOfThemes][7] =
       cinder::Color::hex(0xadc8c8),
       cinder::Color::hex(0x95ebea)}};
 
+const cinder::Color kThemeOutline[kNumOfThemes] =
+    {cinder::Color(1, 1, 1),
+     cinder::Color(1, 1, 1),
+     cinder::Color(0, 0, 0),
+     cinder::Color(0, 0, 0),
+     cinder::Color(1, 1, 1),
+     cinder::Color(0, 0, 0)};
+
 }
 #endif  // FINALPROJECT_SRC_COLOR_THEME_H_

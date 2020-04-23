@@ -119,8 +119,8 @@ void Tetromino::RotateTetromino() {
   }
 
   //Get the points of rotation from which each pixel will rotate around
-  int rotation_point_x = pixels[rotation_point_index].Row();
-  int rotation_point_y = pixels[rotation_point_index].Col();
+  int rotation_point_x = pixels[kRotationPointIndex].Row();
+  int rotation_point_y = pixels[kRotationPointIndex].Col();
 
   //Rotate each pixel
   for (auto& pixel : pixels) {
@@ -131,7 +131,7 @@ void Tetromino::RotateTetromino() {
 
 //Tetromino getters
 Location Tetromino::GetRotationPoint() {
-  return pixels[rotation_point_index];
+  return pixels[kRotationPointIndex];
 }
 
 TetrominoType Tetromino::GetTetrominoType() {

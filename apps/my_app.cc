@@ -9,6 +9,7 @@
 
 #include "my_app.h"
 #include "mylibrary/engine.h"
+#include "mylibrary/color_theme.h"
 
 namespace myapp {
 
@@ -46,7 +47,8 @@ MyApp::MyApp()
     leaderboard_{cinder::app::getAssetPath(kDbPath).string()},
     tile_size_{FLAGS_tilesize},
     username_{FLAGS_name},
-    speed_{kStartSpeed} {}
+    speed_{kStartSpeed},
+    outline_color_{mylibrary::kThemeOutline[engine_.GetColorThemeIndex()]}{}
 
 void MyApp::setup() {
   cinder::gl::enableDepthWrite();
@@ -158,8 +160,10 @@ void MyApp::DrawTetromino() {
                   loc.Col() * tile_size_, (loc.Row() * tile_size_) + tile_size_,
                   (loc.Col() * tile_size_) + tile_size_);
     cinder::gl::drawSolidRect(pixel);
-    cinder::gl::color(0, 0, 0);
-    cinder::gl::drawStrokedRect(pixel);
+
+    //Draw the outline around each pixel
+    cinder::gl::color(outline_color_);
+    cinder::gl::drawStrokedRect(pixel, kOutlineLineWidth);
   }
 }
 
@@ -201,13 +205,16 @@ void MyApp::DrawScreen() {
       if (*col != cinder::Color(1,1,1)) {
         cinder::gl::color(*col);
 
+        //Draws the pixel
         cinder::Rectf pixel
         (cinder::Rectf(x_index * tile_size_,y_index * tile_size_,
             (x_index * tile_size_) + tile_size_,
             (y_index * tile_size_) + tile_size_));
         cinder::gl::drawSolidRect(pixel);
-        cinder::gl::color(0, 0, 0);
-        cinder::gl::drawStrokedRect(pixel);
+
+        //Draw the pixel's outline
+        cinder::gl::color(outline_color_);
+        cinder::gl::drawStrokedRect(pixel, kOutlineLineWidth);
       }
 
       x_index++;

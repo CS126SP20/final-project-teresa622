@@ -16,6 +16,9 @@ namespace myapp {
 const size_t kWidth = 12;
 const size_t kHeight = 20;
 
+//Constant outline width around each tetromino
+const float kOutlineLineWidth = 1.5;
+
 class MyApp : public cinder::app::App {
  public:
   /**
@@ -110,6 +113,8 @@ class MyApp : public cinder::app::App {
   //Keeps track of if the game has ended and if the game over screen should
   //be drawn.
   bool game_over;
+
+  cinder::Color outline_color_;
 };
 
 }  // namespace myapp

@@ -11,7 +11,7 @@ namespace mylibrary {
 Engine::Engine(size_t width, size_t height)
     : width_{width}, height_{height}, game_over_{false}, score_{0},
     tetromino_{0, 0}{
-  screen_.resize(height, std::vector<cinder::Color>( width, kWhite));
+  screen_.resize(height, std::vector<cinder::Color>(width, kWhite));
 
   //Generate a random number quickly: 0-6
   //Credit: https://stackoverflow.com/questions/20201141/same-random-numbers-generated-every-time-in-c
@@ -22,6 +22,7 @@ Engine::Engine(size_t width, size_t height)
   /* using nano-seconds instead of seconds */
   srand((time_t)ts.tv_nsec);
   color_theme_index = rand() % kNumOfThemes;
+  color_theme_index = 1;
 
   tetromino_ = Tetromino(width / 2, color_theme_index);
 }
@@ -227,6 +228,10 @@ bool Engine::IsGameOver() {
 
 size_t Engine::GetScore() {
   return score_;
+}
+
+size_t Engine::GetColorThemeIndex() {
+  return color_theme_index;
 }
 
 }   // namespace mylibrary

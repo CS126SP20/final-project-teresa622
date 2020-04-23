@@ -52,6 +52,7 @@ class Engine {
   std::vector<std::vector<cinder::Color>> GetScreen();
   bool IsGameOver();
   size_t GetScore();
+  size_t GetColorThemeIndex();
 
  private:
   /**

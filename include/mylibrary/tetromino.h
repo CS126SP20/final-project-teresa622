@@ -18,7 +18,7 @@ namespace mylibrary {
 const size_t kNumTetrominoTypes = 7;
 
 //The rotation point is always the 2nd element in our array
-const size_t rotation_point_index = 1;
+const size_t kRotationPointIndex = 1;
 
 //The list of different tetromino types
 const TetrominoType kTetrominoTypes[kNumTetrominoTypes] =
