@@ -48,6 +48,7 @@ class Engine {
   Tetromino GetTetromino();
   //Returns the screen, which contains all the tetrominoes that have already
   //landed on a surface.
+  Tetromino GetProjection();
   std::vector<std::vector<cinder::Color>> GetScreen();
   bool IsGameOver();
   size_t GetScore();
@@ -98,6 +99,7 @@ class Engine {
   Tetromino tetromino_;
   bool game_over_;
   size_t score_;
+  size_t color_theme_index;
 };
 
 }   //namespace mylibrary

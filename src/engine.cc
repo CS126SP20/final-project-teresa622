@@ -3,16 +3,27 @@
 //
 
 #include "mylibrary/engine.h"
-
+#include "mylibrary/color_theme.h"
 #include <utility>
 
 namespace mylibrary {
 
 Engine::Engine(size_t width, size_t height)
-    : width_{width}, height_{height}, tetromino_(width / 2) {
+    : width_{width}, height_{height}, game_over_{false}, score_{0},
+    tetromino_{0, 0}{
   screen_.resize(height, std::vector<cinder::Color>( width, kWhite));
-  game_over_ = false;
-  score_ = 0;
+
+  //Generate a random number quickly: 0-6
+  //Credit: https://stackoverflow.com/questions/20201141/same-random-numbers-generated-every-time-in-c
+  //Answered by rkyser
+  struct timespec ts{};
+  clock_gettime(CLOCK_MONOTONIC, &ts);
+
+  /* using nano-seconds instead of seconds */
+  srand((time_t)ts.tv_nsec);
+  color_theme_index = rand() % kNumOfThemes;
+
+  tetromino_ = Tetromino(width / 2, color_theme_index);
 }
 
 void Engine::Step() {
@@ -35,7 +46,7 @@ void Engine::Step() {
 void Engine::GenerateNewTetromino() {
   //Add our current tetromino to the screen and create a new one.
   AddTetrominoToScreen();
-  tetromino_ = Tetromino(width_ / 2);
+  tetromino_ = Tetromino(width_ / 2, color_theme_index);
 
   //Determine if the newly generated tetromino immediately causes conflict
   //with the other tetrominoes on the screen.
@@ -91,16 +102,31 @@ void Engine::UpdateMovement(Movement movement) {
       }
       break;
     case Movement::kFall:
-      bool fallen = HasMovementConflict(0, 1);
-      while (!fallen) {
-        tetromino_.MoveTetromino(0, 1);
-        fallen = HasMovementConflict(0, 1);
-      }
+      tetromino_ = GetProjection();
 
       //Generate a new tetromino, this one has reached a surface
       Step();
       break;
   }
+}
+
+Tetromino Engine::GetProjection() {
+  //Store the current location of the tetromino
+  Tetromino projection_tetromino = tetromino_;\
+
+  //Now drop our tetromino until it has landed
+  bool fallen = HasMovementConflict(0, 1);
+  while (!fallen) {
+    tetromino_.MoveTetromino(0, 1);
+    fallen = HasMovementConflict(0, 1);
+  }
+
+  //Switch the tetrominoes
+  Tetromino temp = tetromino_;
+  tetromino_ = projection_tetromino;
+  projection_tetromino = temp;
+
+  return projection_tetromino;
 }
 
 bool Engine::ClearedRow() {

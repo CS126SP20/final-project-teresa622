@@ -9,6 +9,7 @@
 
 #include "mylibrary/location.h"
 #include "mylibrary/tetromino_type.h"
+#include "mylibrary/color_theme.h"
 #include <cinder/Color.h>
 
 namespace mylibrary {
@@ -26,16 +27,6 @@ const TetrominoType kTetrominoTypes[kNumTetrominoTypes] =
      TetrominoType::kT, TetrominoType::kS,
      TetrominoType::kZ};
 
-//The color theme of the tetrominoes corresponding to the tetromino types array
-const cinder::Color kColors[kNumTetrominoTypes] =
-    {cinder::Color(0.80, 0.60, 0.79),
-     cinder::Color(0.62, 0.76, 0.81),
-     cinder::Color(0.62, 0.88, 0.62),
-     cinder::Color(1, 0.72, 0.17),
-     cinder::Color(1, 0.40, 0.39),
-     cinder::Color(1, 0.71, 0.71),
-     cinder::Color(1, 0.91,0.37)};
-
 class Tetromino {
  public:
   /**
@@ -43,7 +34,7 @@ class Tetromino {
    * @param center_tile the location of the center tile so our tetromino can be
    * placed in the middle of the screen.
    */
-  explicit Tetromino(int center_tile);
+  Tetromino(int center_tile, size_t theme_index);
 
   /**
    * Tetromino constructor. Used mostly for testing.
@@ -98,6 +89,7 @@ class Tetromino {
 
   //The color of the tetromino piece
   cinder::Color color_;
+
 };
 
 }

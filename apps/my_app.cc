@@ -99,6 +99,7 @@ void MyApp::draw() {
   //Redraw the screen with a new updated frame
   cinder::gl::clear(cinder::Color(1, 1, 1));
   DrawTetromino();
+  DrawProjection();
   DrawScreen();
 }
 
@@ -144,7 +145,7 @@ void MyApp::DrawTetromino() {
   mylibrary::Tetromino tetromino = engine_.GetTetromino();
 
   //Loop through each pixel and draw it in our app
-  for (int i = 0; i < 4; i++) {
+  for (int i = 0; i < mylibrary::kPixelsInTetromino; i++) {
     mylibrary::Location loc = tetromino.GetPixelLocation(i);
     cinder::gl::color(tetromino.GetColor());
 
@@ -153,9 +154,33 @@ void MyApp::DrawTetromino() {
       continue;
     }
 
-    cinder::gl::drawSolidRect(cinder::Rectf(loc.Row() * tile_size_,
-        loc.Col() * tile_size_, (loc.Row() * tile_size_) + tile_size_,
-        (loc.Col() * tile_size_) + tile_size_));
+    cinder::Rectf pixel(loc.Row() * tile_size_,
+                  loc.Col() * tile_size_, (loc.Row() * tile_size_) + tile_size_,
+                  (loc.Col() * tile_size_) + tile_size_);
+    cinder::gl::drawSolidRect(pixel);
+    cinder::gl::color(0, 0, 0);
+    cinder::gl::drawStrokedRect(pixel);
+  }
+}
+
+void MyApp::DrawProjection() {
+  mylibrary::Tetromino projection_tetromino = engine_.GetProjection();
+
+  //Loop through each pixel and draw its outline in black.
+  for (int i = 0; i < mylibrary::kPixelsInTetromino; i++) {
+    mylibrary::Location loc = projection_tetromino.GetPixelLocation(i);
+    cinder::gl::color(0, 0, 0);
+
+    //If this location is above the screen, don't draw it
+    if (loc.Col() < 0) {
+      continue;
+    }
+
+    cinder::Rectf pixel(loc.Row() * tile_size_,
+                        loc.Col() * tile_size_,
+                        (loc.Row() * tile_size_) + tile_size_,
+                        (loc.Col() * tile_size_) + tile_size_);
+    cinder::gl::drawStrokedRect(pixel);
   }
 }
 
@@ -175,10 +200,14 @@ void MyApp::DrawScreen() {
       //that have already touched a surface
       if (*col != cinder::Color(1,1,1)) {
         cinder::gl::color(*col);
-        //cinder::gl::color(0, 1, 0);
-        cinder::gl::drawSolidRect(cinder::Rectf(x_index * tile_size_,
-            y_index * tile_size_,(x_index * tile_size_) + tile_size_,
+
+        cinder::Rectf pixel
+        (cinder::Rectf(x_index * tile_size_,y_index * tile_size_,
+            (x_index * tile_size_) + tile_size_,
             (y_index * tile_size_) + tile_size_));
+        cinder::gl::drawSolidRect(pixel);
+        cinder::gl::color(0, 0, 0);
+        cinder::gl::drawStrokedRect(pixel);
       }
 
       x_index++;

@@ -1,6 +1,9 @@
 # Development
 
 ---
+- **4/22/20** Added colors to the tetrominoes!
+    * Continue testing functionalities
+    * I want to add a projection of the falling tetromino onto the surface. Makes it easier to play.
 - **4/21/20**  Added the scoring and end game features of Tetris
     - Work on more stretch goals for the upcoming week.
     - Continue to test more of the testable functionalities.

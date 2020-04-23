@@ -64,6 +64,12 @@ class MyApp : public cinder::app::App {
   void DrawGameOver();
 
   /**
+   * Draws the outline of the falling tetromino on the surface. Allows for
+   * easier gameplay.
+   */
+  void DrawProjection();
+
+  /**
    * Prints the text onto the screen with the given parameters
    * @tparam C the Cinder::Color type
    * @param text the text to actually print

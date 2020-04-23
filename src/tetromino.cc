@@ -8,7 +8,7 @@
 
 namespace mylibrary {
 
-Tetromino::Tetromino(int center_tile) {
+Tetromino::Tetromino(int center_tile, size_t theme_index) {
   //Generate a random number quickly: 0-6
   //Credit: https://stackoverflow.com/questions/20201141/same-random-numbers-generated-every-time-in-c
   //Answered by rkyser
@@ -19,7 +19,7 @@ Tetromino::Tetromino(int center_tile) {
   srand((time_t)ts.tv_nsec);
   int random_num = rand() % kNumTetrominoTypes;
   tetromino_type_ = kTetrominoTypes[random_num];
-  color_ = kColors[random_num];
+  color_ = kThemes[theme_index][random_num];
   InitializePixels(center_tile);
 }
 
