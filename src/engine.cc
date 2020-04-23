@@ -22,7 +22,6 @@ Engine::Engine(size_t width, size_t height)
   /* using nano-seconds instead of seconds */
   srand((time_t)ts.tv_nsec);
   color_theme_index = rand() % kNumOfThemes;
-  color_theme_index = 1;
 
   tetromino_ = Tetromino(width / 2, color_theme_index);
 }

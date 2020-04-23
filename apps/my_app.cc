@@ -22,6 +22,8 @@ const int kScoreLimit = 3;
 //750 ms is the starting speed of how fast the game updates and how fast the
 //tetrominoes drop
 const int kStartSpeed = 750;
+const size_t kSpeedDecrement = 20;
+const size_t kSpeedLimit = 300;
 
 #if defined(CINDER_COCOA_TOUCH)
 const char kNormalFont[] = "Arial";
@@ -65,6 +67,15 @@ void MyApp::update() {
 
       //Make sure that our top scores is not empty
       assert(!top_players_.empty());
+    }
+  }
+
+  //Increase the speed if we're above the speed threshold and our score has
+  //increased a sufficient amount. This is like each 'level' in Tetris.
+  if (speed_ > kSpeedLimit) {
+    size_t score = engine_.GetScore();
+    if (score != 0 && score % 6 == 0) {
+      speed_ -= kSpeedDecrement;
     }
   }
 
