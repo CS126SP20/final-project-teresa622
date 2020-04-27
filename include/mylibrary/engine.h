@@ -90,6 +90,8 @@ class Engine {
    */
   void GenerateNewTetromino();
 
+  void GenerateColorTheme();
+
  private:
   //The width and height of our game screen. Used to check for illegal moves
   const size_t width_;

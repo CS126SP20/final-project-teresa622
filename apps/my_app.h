@@ -115,7 +115,10 @@ class MyApp : public cinder::app::App {
 
   //Keeps track of if the game has ended and if the game over screen should
   //be drawn.
-  bool game_over;
+  bool game_over_;
+
+  //Tracks if the game is paused or not
+  bool paused_;
 
   //The color of the outline around the pixels, depending on the color theme
   cinder::Color outline_color_;

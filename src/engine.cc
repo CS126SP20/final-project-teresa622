@@ -13,17 +13,22 @@ Engine::Engine(size_t width, size_t height)
     tetromino_{0, 0}{
   screen_.resize(height, std::vector<cinder::Color>(width, kWhite));
 
+  GenerateColorTheme();
+
+  tetromino_ = Tetromino(width / 2, color_theme_index);
+}
+
+void Engine::GenerateColorTheme() {
   //Generate a random number quickly: 0-6
-  //Credit: https://stackoverflow.com/questions/20201141/same-random-numbers-generated-every-time-in-c
-  //Answered by rkyser
+  //Credit: See tetromino.cc
   struct timespec ts{};
   clock_gettime(CLOCK_MONOTONIC, &ts);
 
   /* using nano-seconds instead of seconds */
   srand((time_t)ts.tv_nsec);
-  color_theme_index = rand() % kNumOfThemes;
 
-  tetromino_ = Tetromino(width / 2, color_theme_index);
+  //Generate a random number 0-5
+  color_theme_index = rand() % kNumOfThemes;
 }
 
 void Engine::Step() {
@@ -210,6 +215,15 @@ bool Engine::HasRotationConflict() {
   }
 
   return false;
+}
+
+void Engine::Reset() {
+  game_over_ = {false};
+  score_ = {0};
+  screen_.clear();
+  screen_.resize(height_, std::vector<cinder::Color>(width_, kWhite));
+  GenerateColorTheme();
+  tetromino_ = Tetromino(width_ / 2, color_theme_index);
 }
 
 //Game engine getters

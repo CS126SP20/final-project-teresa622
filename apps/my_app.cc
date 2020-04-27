@@ -27,6 +27,7 @@ const size_t kSpeedDecrement = 20;
 const size_t kLevel = 7;
 const size_t kSpeedLimit = 300;
 
+//Text font defined
 #if defined(CINDER_COCOA_TOUCH)
 const char kNormalFont[] = "Arial";
 const char kBoldFont[] = "Arial-BoldMT";
@@ -41,6 +42,7 @@ const char kBoldFont[] = "Arial Bold";
 const char kDifferentFont[] = "Papyrus";
 #endif
 
+//gflags (user modifiable variables through command line) defined
 DECLARE_uint32(tilesize);
 DECLARE_string(name);
 
@@ -52,7 +54,8 @@ MyApp::MyApp()
     tile_size_{FLAGS_tilesize},
     username_{FLAGS_name},
     speed_{kStartSpeed},
-    outline_color_{mylibrary::kThemeOutline[engine_.GetColorThemeIndex()]}{}
+    outline_color_{mylibrary::kThemeOutline[engine_.GetColorThemeIndex()]},
+    paused_{false}{}
 
 void MyApp::setup() {
   cinder::gl::enableDepthWrite();
@@ -62,50 +65,61 @@ void MyApp::setup() {
 }
 
 void MyApp::SetUpSounds() {
-  //Loaded up theme song and start playing as soon as the game starts
+
+  //Theme song
   ci::audio::SourceFileRef theme_music_file = cinder::audio::load
       (cinder::app::loadAsset("Tetris.mp3"));
   theme_music_ = cinder::audio::Voice::create(theme_music_file);
   theme_music_->start();
 
+  //Line clearing sound effect
   ci::audio::SourceFileRef line_clearing_file = cinder::audio::load
       (cinder::app::loadAsset("line.wav"));
   line_sound_ = cinder::audio::Voice::create(line_clearing_file);
 
+  //Level up sound effect
   ci::audio::SourceFileRef level_up_file = cinder::audio::load
       (cinder::app::loadAsset("clear.wav"));
   clear_sound_ = cinder::audio::Voice::create(level_up_file);
 
+  //Tetromino falling sound effect
   ci::audio::SourceFileRef fall_file = cinder::audio::load
       (cinder::app::loadAsset("fall.wav"));
   fall_sound_ = cinder::audio::Voice::create(fall_file);
 
+  //Game over sound effect
   ci::audio::SourceFileRef game_over_file = cinder::audio::load
       (cinder::app::loadAsset("gameover.wav"));
   game_over_sound_ = cinder::audio::Voice::create(game_over_file);
 }
 
 void MyApp::update() {
-  if (game_over) {
-
-    //Fill our vector with the top three scores in our leaderboard
+  if (game_over_) {
+    // Fill our vector with the top three scores in our leaderboard
     if (top_players_.empty()) {
       leaderboard_.AddScoreToLeaderBoard({username_, engine_.GetScore()});
       top_players_ = leaderboard_.RetrieveHighScores(kScoreLimit);
 
-      //Make sure that our top scores is not empty
+      // Make sure that our top scores is not empty
       assert(!top_players_.empty());
     }
 
-    //Stop the theme music when the game ends
+    // Stop the theme music when the game ends
     theme_music_->stop();
     return;
   }
 
+  //If the game is paused, don't step the engine
+  if (paused_) {
+    return;
+  }
+
+  //Replay the music if it ends
   if (!theme_music_->isPlaying()) {
     theme_music_->start();
   }
 
+  //Update our score tracker with the engine's score
   if (score_ != engine_.GetScore()) {
     score_ = engine_.GetScore();
     line_sound_->start();
@@ -135,19 +149,24 @@ void MyApp::draw() {
   cinder::gl::enableAlphaBlending();
 
   //If the game has ended, draw the end screen.
-  if (engine_.IsGameOver() && game_over) {
+  if (engine_.IsGameOver() && game_over_) {
     if (!printed_game_over_) {
       cinder::gl::clear(cinder::Color(1, 0, 0));
     }
 
     DrawGameOver();
     return;
-  } else if (engine_.IsGameOver() && !game_over) {
+  } else if (engine_.IsGameOver() && !game_over_) {
     //The game has just ended. Draw the regular game screen one more time
     //to show the player that they lost. Next time around, we'll draw the
     //end screen. Without this buffer, it may look to the player that the
     //game ended early.
-    game_over = true;
+    game_over_ = true;
+  }
+
+  //If the game is paused, there's nothing new to draw
+  if (paused_) {
+    return;
   }
 
   //Redraw the screen with a new updated frame
@@ -193,6 +212,22 @@ void MyApp::keyDown(KeyEvent event) {
       break;
     }
 
+    case KeyEvent::KEY_p: {
+
+      //Stop or start the music depending on if the user is pausing or unpausing
+      if (!paused_) {
+        theme_music_->pause();
+      } else {
+        theme_music_->start();
+      }
+
+      paused_ = !paused_;
+      break;
+    }
+
+    case KeyEvent::KEY_r:
+      engine_.Reset();
+      break;
   }
 }
 
@@ -253,6 +288,7 @@ void MyApp::DrawScreen() {
 
   for (row = screen.begin(); row != screen.end(); ++row) {
     for (col = row->begin(); col != row->end(); ++col) {
+
       //Color the non-white elements in the 2D vector > those are the the pixels
       //that have already touched a surface
       if (*col != cinder::Color(1,1,1)) {
@@ -307,6 +343,7 @@ void MyApp::DrawGameOver() {
   if (printed_game_over_) return;
   if (top_players_.empty()) return;
 
+  //We're playing the game over sound here because we only want it to play once
   game_over_sound_->start();
 
   //Get the location, size, and color of our text
