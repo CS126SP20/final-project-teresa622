@@ -117,15 +117,18 @@ class MyApp : public cinder::app::App {
   //be drawn.
   bool game_over;
 
+  //The color of the outline around the pixels, depending on the color theme
   cinder::Color outline_color_;
 
+  //The score of the player
   size_t score_;
 
+  //Music and sound effect variables
   cinder::audio::VoiceRef theme_music_;
   cinder::audio::VoiceRef line_sound_;
   cinder::audio::VoiceRef clear_sound_;
   cinder::audio::VoiceRef fall_sound_;
-  cinder::audio::VoiceRef game_over_sound;
+  cinder::audio::VoiceRef game_over_sound_;
 };
 
 }  // namespace myapp

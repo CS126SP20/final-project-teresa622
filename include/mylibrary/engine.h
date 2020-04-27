@@ -15,6 +15,7 @@ namespace mylibrary {
 //The number of pixels in every tetromino piece
 const size_t kPixelsInTetromino = 4;
 
+//The color of the locations without tetrominoes are white.
 const cinder::Color kWhite(1, 1, 1);
 
 class Engine {
@@ -97,9 +98,16 @@ class Engine {
   //Stores all the fallen tetrominoes. Used by the app to draw.
   std::vector<std::vector<cinder::Color>> screen_;
 
+  //The tetromino that is falling down
   Tetromino tetromino_;
+
+  //Whether or not the game is over
   bool game_over_;
+
+  //The current score based on how many lines were cleared
   size_t score_;
+
+  //The index of the color theme that corresponds to the kThemes array
   size_t color_theme_index;
 };
 

@@ -82,7 +82,7 @@ void MyApp::SetUpSounds() {
 
   ci::audio::SourceFileRef game_over_file = cinder::audio::load
       (cinder::app::loadAsset("gameover.wav"));
-  game_over_sound = cinder::audio::Voice::create(game_over_file);
+  game_over_sound_ = cinder::audio::Voice::create(game_over_file);
 }
 
 void MyApp::update() {
@@ -307,7 +307,7 @@ void MyApp::DrawGameOver() {
   if (printed_game_over_) return;
   if (top_players_.empty()) return;
 
-  game_over_sound->start();
+  game_over_sound_->start();
 
   //Get the location, size, and color of our text
   const cinder::vec2 center = {getWindowCenter().x, 40};

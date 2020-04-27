@@ -1,6 +1,9 @@
 # Development
 
 ---
+- **4/26/20** Implemented sound effects
+    * Need to add clarifying comments to tetromino types and perhaps some more event keys (pause, mute sounds, maybe an opening screen)
+    * Improve the end screen as well
 - **4/22/20** Added colors to the tetrominoes!
     * Continue testing functionalities
     * I want to add a projection of the falling tetromino onto the surface. Makes it easier to play.

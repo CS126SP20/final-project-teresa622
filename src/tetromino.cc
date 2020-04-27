@@ -56,57 +56,57 @@ void Tetromino::InitializePixels(int center_tile) {
 
 //Each different type of tetromino generated given the center_tile
 void Tetromino::GenerateZ(int center_tile) {
-  pixels[0] = {center_tile + 1, 1};
-  pixels[1] = {center_tile, 1};
-  pixels[2] = {center_tile, 0};
-  pixels[3] = {center_tile - 1, 0};
+  pixels_[0] = {center_tile + 1, 1};
+  pixels_[1] = {center_tile, 1};
+  pixels_[2] = {center_tile, 0};
+  pixels_[3] = {center_tile - 1, 0};
 }
 
 void Tetromino::GenerateS(int center_tile) {
-  pixels[0] = {center_tile - 1, 1};
-  pixels[1] = {center_tile, 1};
-  pixels[2] = {center_tile, 0};
-  pixels[3] = {center_tile + 1, 0};
+  pixels_[0] = {center_tile - 1, 1};
+  pixels_[1] = {center_tile, 1};
+  pixels_[2] = {center_tile, 0};
+  pixels_[3] = {center_tile + 1, 0};
 }
 
 void Tetromino::GenerateT(int center_tile) {
-  pixels[0] = {center_tile - 1, 1};
-  pixels[1] = {center_tile, 1};
-  pixels[2] = {center_tile + 1, 1};
-  pixels[3] = {center_tile, 0};
+  pixels_[0] = {center_tile - 1, 1};
+  pixels_[1] = {center_tile, 1};
+  pixels_[2] = {center_tile + 1, 1};
+  pixels_[3] = {center_tile, 0};
 }
 
 void Tetromino::GenerateO(int center_tile) {
-  pixels[0] = Location(center_tile - 1, 0);
-  pixels[1] = Location(center_tile, 0);
-  pixels[2] = Location(center_tile - 1, 1);
-  pixels[3] = Location(center_tile, 1);
+  pixels_[0] = Location(center_tile - 1, 0);
+  pixels_[1] = Location(center_tile, 0);
+  pixels_[2] = Location(center_tile - 1, 1);
+  pixels_[3] = Location(center_tile, 1);
 }
 
 void Tetromino::GenerateI(int center_tile) {
-  pixels[0] = Location(center_tile - 2, 1);
-  pixels[1] = Location(center_tile - 1, 1);
-  pixels[2] = Location(center_tile, 1);
-  pixels[3] = Location(center_tile + 1, 1);
+  pixels_[0] = Location(center_tile - 2, 1);
+  pixels_[1] = Location(center_tile - 1, 1);
+  pixels_[2] = Location(center_tile, 1);
+  pixels_[3] = Location(center_tile + 1, 1);
 }
 
 void Tetromino::GenerateJ(int center_tile) {
-  pixels[0] = Location(center_tile, 0);
-  pixels[1] = Location(center_tile, 1);
-  pixels[2] = Location(center_tile, 2);
-  pixels[3] = Location(center_tile - 1, 2);
+  pixels_[0] = Location(center_tile, 0);
+  pixels_[1] = Location(center_tile, 1);
+  pixels_[2] = Location(center_tile, 2);
+  pixels_[3] = Location(center_tile - 1, 2);
 }
 
 void Tetromino::GenerateL(int center_tile) {
-  pixels[0] = Location(center_tile, 0);
-  pixels[1] = Location(center_tile, 1);
-  pixels[2] = Location(center_tile, 2);
-  pixels[3] = Location(center_tile + 1, 2);
+  pixels_[0] = Location(center_tile, 0);
+  pixels_[1] = Location(center_tile, 1);
+  pixels_[2] = Location(center_tile, 2);
+  pixels_[3] = Location(center_tile + 1, 2);
 }
 
 void Tetromino::MoveTetromino(int horizontal_amount, int vertical_amount) {
   //Loop through each pixel and moves it with the given amount
-  for (auto& pixel : pixels) {
+  for (auto& pixel : pixels_) {
     pixel = Location(pixel.Row() + horizontal_amount,
         pixel.Col() + vertical_amount);
   }
@@ -119,11 +119,11 @@ void Tetromino::RotateTetromino() {
   }
 
   //Get the points of rotation from which each pixel will rotate around
-  int rotation_point_x = pixels[kRotationPointIndex].Row();
-  int rotation_point_y = pixels[kRotationPointIndex].Col();
+  int rotation_point_x = pixels_[kRotationPointIndex].Row();
+  int rotation_point_y = pixels_[kRotationPointIndex].Col();
 
   //Rotate each pixel
-  for (auto& pixel : pixels) {
+  for (auto& pixel : pixels_) {
     pixel = Location((rotation_point_x + rotation_point_y) - pixel.Col(),
                      (rotation_point_y - rotation_point_x) + pixel.Row());
   }
@@ -131,7 +131,7 @@ void Tetromino::RotateTetromino() {
 
 //Tetromino getters
 Location Tetromino::GetRotationPoint() {
-  return pixels[kRotationPointIndex];
+  return pixels_[kRotationPointIndex];
 }
 
 TetrominoType Tetromino::GetTetrominoType() {
@@ -139,7 +139,7 @@ TetrominoType Tetromino::GetTetrominoType() {
 }
 
 Location Tetromino::GetPixelLocation(size_t index) {
-  return pixels[index];
+  return pixels_[index];
 }
 
 cinder::Color Tetromino::GetColor() {

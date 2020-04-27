@@ -81,7 +81,7 @@ class Tetromino {
 
  private:
   //Holds the Location of each pixel in our tetromino
-  Location pixels[4] = {Location(0,0), Location(0,0),
+  Location pixels_[4] = {Location(0,0), Location(0,0),
                         Location(0,0), Location(0,0)};
 
   //Saves the type of tetromino this instance is
