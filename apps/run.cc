@@ -9,7 +9,6 @@
 using cinder::app::App;
 using cinder::app::RendererGl;
 
-
 namespace myapp {
 
 //These are the gflags that the user can modify via command line arguments.
@@ -45,7 +44,6 @@ void SetUp(App::Settings* settings) {
   const int height = static_cast<int>(kHeight*FLAGS_tilesize);
 
   settings->setWindowSize(width, height);
-  settings->setResizable(false);
   settings->setTitle("Tetris");
 }
 

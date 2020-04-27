@@ -6,6 +6,7 @@
 #include <gflags/gflags.h>
 #include <cinder/Text.h>
 #include <cinder/Font.h>
+#include <cinder/audio/Voice.h>
 
 #include "my_app.h"
 #include "mylibrary/engine.h"
@@ -23,6 +24,7 @@ const int kScoreLimit = 3;
 //tetrominoes drop
 const int kStartSpeed = 750;
 const size_t kSpeedDecrement = 20;
+const size_t kLevel = 7;
 const size_t kSpeedLimit = 300;
 
 #if defined(CINDER_COCOA_TOUCH)
@@ -55,6 +57,32 @@ MyApp::MyApp()
 void MyApp::setup() {
   cinder::gl::enableDepthWrite();
   cinder::gl::enableDepthRead();
+
+  SetUpSounds();
+}
+
+void MyApp::SetUpSounds() {
+  //Loaded up theme song and start playing as soon as the game starts
+  ci::audio::SourceFileRef theme_music_file = cinder::audio::load
+      (cinder::app::loadAsset("Tetris.mp3"));
+  theme_music_ = cinder::audio::Voice::create(theme_music_file);
+  theme_music_->start();
+
+  ci::audio::SourceFileRef line_clearing_file = cinder::audio::load
+      (cinder::app::loadAsset("line.wav"));
+  line_sound_ = cinder::audio::Voice::create(line_clearing_file);
+
+  ci::audio::SourceFileRef level_up_file = cinder::audio::load
+      (cinder::app::loadAsset("clear.wav"));
+  clear_sound_ = cinder::audio::Voice::create(level_up_file);
+
+  ci::audio::SourceFileRef fall_file = cinder::audio::load
+      (cinder::app::loadAsset("fall.wav"));
+  fall_sound_ = cinder::audio::Voice::create(fall_file);
+
+  ci::audio::SourceFileRef game_over_file = cinder::audio::load
+      (cinder::app::loadAsset("gameover.wav"));
+  game_over_sound = cinder::audio::Voice::create(game_over_file);
 }
 
 void MyApp::update() {
@@ -68,14 +96,27 @@ void MyApp::update() {
       //Make sure that our top scores is not empty
       assert(!top_players_.empty());
     }
+
+    //Stop the theme music when the game ends
+    theme_music_->stop();
+    return;
+  }
+
+  if (!theme_music_->isPlaying()) {
+    theme_music_->start();
+  }
+
+  if (score_ != engine_.GetScore()) {
+    score_ = engine_.GetScore();
+    line_sound_->start();
   }
 
   //Increase the speed if we're above the speed threshold and our score has
   //increased a sufficient amount. This is like each 'level' in Tetris.
   if (speed_ > kSpeedLimit) {
-    size_t score = engine_.GetScore();
-    if (score != 0 && score % 6 == 0) {
+    if (score_ != 0 && score_ % kLevel == 0) {
       speed_ -= kSpeedDecrement;
+      clear_sound_->start();
     }
   }
 
@@ -148,6 +189,7 @@ void MyApp::keyDown(KeyEvent event) {
 
     case KeyEvent::KEY_SPACE: {
       engine_.UpdateMovement(mylibrary::Movement::kFall);
+      fall_sound_->start();
       break;
     }
 
@@ -264,6 +306,8 @@ void MyApp::DrawGameOver() {
   //Allows for lazy printing.
   if (printed_game_over_) return;
   if (top_players_.empty()) return;
+
+  game_over_sound->start();
 
   //Get the location, size, and color of our text
   const cinder::vec2 center = {getWindowCenter().x, 40};

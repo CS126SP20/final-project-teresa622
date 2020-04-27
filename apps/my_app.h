@@ -4,6 +4,7 @@
 #define FINALPROJECT_APPS_MYAPP_H_
 
 #include <cinder/app/App.h>
+#include <cinder/audio/Voice.h>
 
 #include "mylibrary/player.h"
 #include "mylibrary/engine.h"
@@ -72,6 +73,8 @@ class MyApp : public cinder::app::App {
    */
   void DrawProjection();
 
+  void SetUpSounds();
+
   /**
    * Prints the text onto the screen with the given parameters
    * @tparam C the Cinder::Color type
@@ -115,6 +118,14 @@ class MyApp : public cinder::app::App {
   bool game_over;
 
   cinder::Color outline_color_;
+
+  size_t score_;
+
+  cinder::audio::VoiceRef theme_music_;
+  cinder::audio::VoiceRef line_sound_;
+  cinder::audio::VoiceRef clear_sound_;
+  cinder::audio::VoiceRef fall_sound_;
+  cinder::audio::VoiceRef game_over_sound;
 };
 
 }  // namespace myapp
