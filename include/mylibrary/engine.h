@@ -29,6 +29,17 @@ class Engine {
   Engine(size_t width, size_t height);
 
   /**
+   * Engine constructor. Allows initialization of specific screen to begin with
+   * Currently used for testing purposes, but can be used in the future
+   * for Tetris games with maps (pixels already on the screen to begin with)
+   * @param width the width of the screen
+   * @param height the height of the screen
+   * @param screen the pixels the screen should be initialized with
+   */
+  Engine(size_t width, size_t height,
+      std::vector<std::vector<cinder::Color>> screen);
+
+  /**
    * Executes a time step: moves the tetromino down or creates a new one
    */
   void Step();
@@ -96,6 +107,7 @@ class Engine {
   //The width and height of our game screen. Used to check for illegal moves
   const size_t width_;
   const size_t height_;
+  const size_t center_tile_;
 
   //Stores all the fallen tetrominoes. Used by the app to draw.
   std::vector<std::vector<cinder::Color>> screen_;

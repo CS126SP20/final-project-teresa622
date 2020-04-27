@@ -18,6 +18,7 @@ Tetromino::Tetromino(int center_tile, size_t theme_index) {
   /* using nano-seconds instead of seconds */
   srand((time_t)ts.tv_nsec);
   int random_num = rand() % kNumTetrominoTypes;
+
   tetromino_type_ = kTetrominoTypes[random_num];
   color_ = kThemes[theme_index][random_num];
   InitializePixels(center_tile);

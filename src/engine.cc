@@ -10,12 +10,23 @@ namespace mylibrary {
 
 Engine::Engine(size_t width, size_t height)
     : width_{width}, height_{height}, game_over_{false}, score_{0},
-    tetromino_{0, 0}{
+    tetromino_{0, 0}, center_tile_{width_ / 2} {
   screen_.resize(height, std::vector<cinder::Color>(width, kWhite));
 
   GenerateColorTheme();
 
-  tetromino_ = Tetromino(width / 2, color_theme_index);
+  tetromino_ = Tetromino(center_tile_, color_theme_index);
+}
+
+Engine::Engine(size_t width, size_t height,
+    std::vector<std::vector<cinder::Color>> screen)
+  : width_{width}, height_{height}, game_over_{false}, score_{0},
+  tetromino_{0, 0}, center_tile_{width_ / 2},
+  screen_{std::move(screen)} {
+
+  GenerateColorTheme();
+
+  tetromino_ = Tetromino(center_tile_, color_theme_index);
 }
 
 void Engine::GenerateColorTheme() {
@@ -223,7 +234,7 @@ void Engine::Reset() {
   screen_.clear();
   screen_.resize(height_, std::vector<cinder::Color>(width_, kWhite));
   GenerateColorTheme();
-  tetromino_ = Tetromino(width_ / 2, color_theme_index);
+  tetromino_ = Tetromino(center_tile_, color_theme_index);
 }
 
 //Game engine getters
