@@ -1,6 +1,8 @@
 # Development
 
 ---
+- **4/27/20** Added more tests (movemnt conflicts) for engine
+    * Finish up testing engine (rotation conflict testing)
 - **4/26/20** Implemented sound effects
     * Need to add clarifying comments to tetromino types and perhaps some more event keys (pause, mute sounds, maybe an opening screen)
     * Improve the end screen as well

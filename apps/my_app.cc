@@ -65,8 +65,7 @@ void MyApp::setup() {
 }
 
 void MyApp::SetUpSounds() {
-
-  //Theme song
+  //Tetris theme song
   ci::audio::SourceFileRef theme_music_file = cinder::audio::load
       (cinder::app::loadAsset("Tetris.mp3"));
   theme_music_ = cinder::audio::Voice::create(theme_music_file);
