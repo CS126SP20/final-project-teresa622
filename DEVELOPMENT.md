@@ -1,10 +1,16 @@
 # Development
 
 ---
+- **4/30/20** Modified some functions to make them more testable for rotation conflicts
+    * Check that all comments are followed by spaces
+    * Create a utils file to avoid repetitive code for generating a random number? Or would this be unnecessary
+    for just one function?
+    * Rename row and column in our location class to better suit the interpretation of row and column for Tetris
 - **4/27/20** Added more tests (movemnt conflicts) for engine
     * Finish up testing engine (rotation conflict testing)
 - **4/26/20** Implemented sound effects
-    * Need to add clarifying comments to tetromino types and perhaps some more event keys (pause, mute sounds, maybe an opening screen)
+    * Need to add clarifying comments to tetromino types and perhaps some more event keys 
+    (pause, mute sounds, maybe an opening screen)
     * Improve the end screen as well
     * Remember to modify the sound effects to make some louder
 - **4/22/20** Added colors to the tetrominoes!
@@ -15,7 +21,7 @@
     - Continue to test more of the testable functionalities.
 - **4/20/20** Implemented line clearing functionality
     - [ ] Figure out how to not have more than 3 of the same tetromino in a row. Or should it be completely random..?
-    - [ ] Add color to the tetrominoes. Maybe this functionality will be implemented in the farther future.
+    - [X] Add color to the tetrominoes. Maybe this functionality will be implemented in the farther future.
     - [X] Figure out how to end the game if the player reaches the top of the screen
     - [X] Implement more scoring functionalities with the database
     * Continue to keep testing more

@@ -14,13 +14,13 @@
 
 namespace mylibrary {
 
-//The constant number of types of tetrominoes
+// The constant number of types of tetrominoes
 const size_t kNumTetrominoTypes = 7;
 
-//The rotation point is always the 2nd element in our array
+// The rotation point is always the 2nd element in our array
 const size_t kRotationPointIndex = 1;
 
-//The list of different tetromino types
+// The list of different tetromino types
 const TetrominoType kTetrominoTypes[kNumTetrominoTypes] =
     {TetrominoType::kI, TetrominoType::kJ,
      TetrominoType::kL, TetrominoType::kO,
@@ -41,7 +41,7 @@ class Tetromino {
    * @param center_tile the location of the center of the screen width-wise
    * @param tetromino_type the type of tetromino that should be created.
    */
-  Tetromino(int center_tile, TetrominoType tetromino_type);
+  Tetromino(int center_tile, size_t theme_index, TetrominoType tetromino_type);
 
   /**
    * Translate each pixel of our tetromino
@@ -55,7 +55,7 @@ class Tetromino {
    */
   void RotateTetromino();
 
-  //Tetromino getters
+  // Tetromino getters
   Location GetPixelLocation(size_t index);
   Location GetRotationPoint();
   TetrominoType GetTetrominoType();
@@ -70,7 +70,13 @@ class Tetromino {
    */
   void InitializePixels(int center_tile);
 
-  //Generates each type of tetromino
+  /**
+   * Generates a random number 0-6 for a tetromino type
+   * @return the number that is the index of the tetromino type we are creating
+   */
+  static size_t GenerateRandTetrominoIndex();
+
+  // Generates each type of tetromino
   void GenerateI(int center_tile);
   void GenerateJ(int center_tile);
   void GenerateL(int center_tile);
@@ -80,14 +86,14 @@ class Tetromino {
   void GenerateZ(int center_tile);
 
  private:
-  //Holds the Location of each pixel in our tetromino
+  // Holds the Location of each pixel in our tetromino
   Location pixels_[4] = {Location(0,0), Location(0,0),
                         Location(0,0), Location(0,0)};
 
-  //Saves the type of tetromino this instance is
+  // Saves the type of tetromino this instance is
   TetrominoType tetromino_type_;
 
-  //The color of the tetromino piece
+  // The color of the tetromino piece
   cinder::Color color_;
 
 };

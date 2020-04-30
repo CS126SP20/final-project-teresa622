@@ -9,24 +9,38 @@
 namespace mylibrary {
 
 Tetromino::Tetromino(int center_tile, size_t theme_index) {
-  //Generate a random number quickly: 0-6
-  //Credit: https://stackoverflow.com/questions/20201141/same-random-numbers-generated-every-time-in-c
-  //Answered by rkyser
+  // Generate a random type of tetromino
+  size_t rand_tetromino_index = GenerateRandTetrominoIndex();
+
+  // Initialize our tetromino type and color with the random number
+  tetromino_type_ = kTetrominoTypes[rand_tetromino_index];
+  color_ = kThemes[theme_index][rand_tetromino_index];
+  InitializePixels(center_tile);
+}
+
+Tetromino::Tetromino(int center_tile, size_t theme_index,
+    TetrominoType tetromino_type) {
+  // Generate a random color
+  size_t rand_tetromino_index = GenerateRandTetrominoIndex();
+
+  // Initialize our tetromino with the type specified in the parameter
+  // and give it a random color
+  tetromino_type_ = tetromino_type;
+  color_ = kThemes[theme_index][rand_tetromino_index];
+  InitializePixels(center_tile);
+}
+
+size_t Tetromino::GenerateRandTetrominoIndex() {
+  // Generate a random number quickly: 0-6
+  // Credit: https://stackoverflow.com/questions/20201141/same-random-numbers-generated-every-time-in-c
+  // (^ line cannot be less than 80 characters)
+  // Answered by rkyser
   struct timespec ts{};
   clock_gettime(CLOCK_MONOTONIC, &ts);
 
   /* using nano-seconds instead of seconds */
   srand((time_t)ts.tv_nsec);
-  int random_num = rand() % kNumTetrominoTypes;
-
-  tetromino_type_ = kTetrominoTypes[random_num];
-  color_ = kThemes[theme_index][random_num];
-  InitializePixels(center_tile);
-}
-
-Tetromino::Tetromino(int center_tile, TetrominoType tetromino_type) {
-  tetromino_type_ = tetromino_type;
-  InitializePixels(center_tile);
+  return rand() % kNumTetrominoTypes;
 }
 
 void Tetromino::InitializePixels(int center_tile) {
@@ -55,7 +69,7 @@ void Tetromino::InitializePixels(int center_tile) {
   }
 }
 
-//Each different type of tetromino generated given the center_tile
+// Each different type of tetromino generated given the center_tile
 void Tetromino::GenerateZ(int center_tile) {
   pixels_[0] = {center_tile + 1, 1};
   pixels_[1] = {center_tile, 1};
@@ -106,7 +120,7 @@ void Tetromino::GenerateL(int center_tile) {
 }
 
 void Tetromino::MoveTetromino(int horizontal_amount, int vertical_amount) {
-  //Loop through each pixel and moves it with the given amount
+  // Loop through each pixel and moves it with the given amount
   for (auto& pixel : pixels_) {
     pixel = Location(pixel.Row() + horizontal_amount,
         pixel.Col() + vertical_amount);
@@ -114,23 +128,23 @@ void Tetromino::MoveTetromino(int horizontal_amount, int vertical_amount) {
 }
 
 void Tetromino::RotateTetromino() {
-  //If the tetromino is type O, then rotation does nothing
+  // If the tetromino is type O, then rotation does nothing
   if (tetromino_type_ == TetrominoType::kO) {
     return;
   }
 
-  //Get the points of rotation from which each pixel will rotate around
+  // Get the points of rotation from which each pixel will rotate around
   int rotation_point_x = pixels_[kRotationPointIndex].Row();
   int rotation_point_y = pixels_[kRotationPointIndex].Col();
 
-  //Rotate each pixel
+  // Rotate each pixel
   for (auto& pixel : pixels_) {
     pixel = Location((rotation_point_x + rotation_point_y) - pixel.Col(),
                      (rotation_point_y - rotation_point_x) + pixel.Row());
   }
 }
 
-//Tetromino getters
+// Tetromino getters
 Location Tetromino::GetRotationPoint() {
   return pixels_[kRotationPointIndex];
 }

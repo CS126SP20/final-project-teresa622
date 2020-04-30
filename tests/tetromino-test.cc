@@ -10,7 +10,7 @@
 
 TEST_CASE("Tetromino I") {
   mylibrary::Tetromino tetromino
-  (5, mylibrary::TetrominoType::kI);
+  (5, 0, mylibrary::TetrominoType::kI);
 
   SECTION("Initializing I") {
     mylibrary::Location pixels[4] = {mylibrary::Location(3, 1),
@@ -36,7 +36,7 @@ TEST_CASE("Tetromino I") {
 
 TEST_CASE("Tetromino J") {
   mylibrary::Tetromino tetromino
-      (5, mylibrary::TetrominoType::kJ);
+      (5, 0, mylibrary::TetrominoType::kJ);
 
   SECTION("Initializing J") {
     mylibrary::Location pixels[4] = {mylibrary::Location(5, 0),
@@ -55,7 +55,7 @@ TEST_CASE("Tetromino J") {
 
 TEST_CASE("Tetromino L") {
   mylibrary::Tetromino tetromino
-      (5, mylibrary::TetrominoType::kL);
+      (5, 0, mylibrary::TetrominoType::kL);
 
   SECTION("Initializing L") {
     mylibrary::Location pixels[4] = {mylibrary::Location(5, 0),
@@ -70,7 +70,7 @@ TEST_CASE("Tetromino L") {
 
 TEST_CASE("Tetromino O") {
   mylibrary::Tetromino tetromino
-      (5, mylibrary::TetrominoType::kO);
+      (5, 0, mylibrary::TetrominoType::kO);
   mylibrary::Location pixels[4] = {mylibrary::Location(4, 0),
                                    mylibrary::Location (5, 0),
                                    mylibrary::Location(4, 1),
@@ -93,7 +93,7 @@ TEST_CASE("Tetromino O") {
 
 TEST_CASE("Tetromino T") {
   mylibrary::Tetromino tetromino
-      (5, mylibrary::TetrominoType::kT);
+      (5, 0, mylibrary::TetrominoType::kT);
 
   SECTION("Initializing T") {
     mylibrary::Location pixels[4] = {mylibrary::Location(4, 1),
@@ -123,7 +123,7 @@ TEST_CASE("Tetromino T") {
 
 TEST_CASE("Tetromino S") {
   mylibrary::Tetromino tetromino
-      (5, mylibrary::TetrominoType::kS);
+      (5, 0, mylibrary::TetrominoType::kS);
 
   SECTION("Initializing S") {
     mylibrary::Location pixels[4] = {mylibrary::Location(4, 1),
@@ -138,7 +138,7 @@ TEST_CASE("Tetromino S") {
 
 TEST_CASE("Tetromino Z") {
   mylibrary::Tetromino tetromino
-      (5, mylibrary::TetrominoType::kZ);
+      (5, 0, mylibrary::TetrominoType::kZ);
 
   SECTION("Initializing Z") {
     mylibrary::Location pixels[4] = {mylibrary::Location(6, 1),

@@ -11,27 +11,33 @@ namespace mylibrary {
 Engine::Engine(size_t width, size_t height)
     : width_{width}, height_{height}, game_over_{false}, score_{0},
     tetromino_{0, 0}, center_tile_{width_ / 2} {
+
+  // Fill our screen with all white pixels to start with
   screen_.resize(height, std::vector<cinder::Color>(width, kWhite));
 
-  GenerateColorTheme();
+  // Get a random color theme for this game
+  color_theme_index_ = GenerateColorThemeIndex();
 
-  tetromino_ = Tetromino(center_tile_, color_theme_index);
+  tetromino_ = Tetromino(center_tile_, color_theme_index_);
 }
 
 Engine::Engine(size_t width, size_t height,
-    std::vector<std::vector<cinder::Color>> screen)
+    std::vector<std::vector<cinder::Color>> screen,
+    TetrominoType tetromino_type)
   : width_{width}, height_{height}, game_over_{false}, score_{0},
   tetromino_{0, 0}, center_tile_{width_ / 2},
+
+    // Fill our screen with the pixels we were given
   screen_{std::move(screen)} {
 
-  GenerateColorTheme();
+  // Get a random color theme for this game
+  color_theme_index_ = GenerateColorThemeIndex();
 
-  tetromino_ = Tetromino(center_tile_, color_theme_index);
+  tetromino_ = Tetromino(center_tile_, color_theme_index_, tetromino_type);
 }
 
-void Engine::GenerateColorTheme() {
-  //Generate a random number quickly: 0-6
-  //Credit: See tetromino.cc
+size_t Engine::GenerateColorThemeIndex() {
+  // Credit: See tetromino.cc
   struct timespec ts{};
   clock_gettime(CLOCK_MONOTONIC, &ts);
 
@@ -39,7 +45,7 @@ void Engine::GenerateColorTheme() {
   srand((time_t)ts.tv_nsec);
 
   //Generate a random number 0-5
-  color_theme_index = rand() % kNumOfThemes;
+  return rand() % kNumOfThemes;
 }
 
 void Engine::Step() {
@@ -62,7 +68,7 @@ void Engine::Step() {
 void Engine::GenerateNewTetromino() {
   //Add our current tetromino to the screen and create a new one.
   AddTetrominoToScreen();
-  tetromino_ = Tetromino(width_ / 2, color_theme_index);
+  tetromino_ = Tetromino(width_ / 2, color_theme_index_);
 
   //Determine if the newly generated tetromino immediately causes conflict
   //with the other tetrominoes on the screen.
@@ -233,8 +239,8 @@ void Engine::Reset() {
   score_ = {0};
   screen_.clear();
   screen_.resize(height_, std::vector<cinder::Color>(width_, kWhite));
-  GenerateColorTheme();
-  tetromino_ = Tetromino(center_tile_, color_theme_index);
+  GenerateColorThemeIndex();
+  tetromino_ = Tetromino(center_tile_, color_theme_index_);
 }
 
 //Game engine getters
@@ -255,7 +261,7 @@ size_t Engine::GetScore() {
 }
 
 size_t Engine::GetColorThemeIndex() {
-  return color_theme_index;
+  return color_theme_index_;
 }
 
 }   // namespace mylibrary
