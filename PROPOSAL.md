@@ -19,7 +19,6 @@ I want to make Tetris because I enjoy playing the game, and I think it would be 
 
 I am planning on using:
  * [SQLite](https://www.sqlite.org/index.html) database to store player scores.
- * [Choreograph](https://github.com/sansumbrella/Choreograph) - I am deciding between using this Cinder Block or utilies that are already part of Cinder.
   
 **Rough Timeline**
 

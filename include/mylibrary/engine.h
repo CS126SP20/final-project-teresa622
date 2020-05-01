@@ -10,12 +10,12 @@
 #include "movement.h"
 #include "mylibrary/tetromino.h"
 
-namespace mylibrary {
+namespace tetris {
 
-// The number of pixels in every tetromino piece
+//The number of pixels in every tetromino piece
 const size_t kPixelsInTetromino = 4;
 
-// The color of the locations without tetrominoes are white.
+//The color of the locations without tetrominoes are white.
 const cinder::Color kWhite(1, 1, 1);
 
 class Engine {
@@ -57,10 +57,10 @@ class Engine {
    */
   void UpdateMovement(Movement movement);
 
-  // Engine getters
+  //Engine getters
   Tetromino GetTetromino();
-  // Returns the screen, which contains all the tetrominoes that have already
-  // landed on a surface.
+  //Returns the screen, which contains all the tetrominoes that have already
+  //landed on a surface.
   Tetromino GetProjection();
   std::vector<std::vector<cinder::Color>> GetScreen();
   bool IsGameOver();
@@ -109,24 +109,24 @@ class Engine {
   size_t GenerateColorThemeIndex();
 
  private:
-  // The width and height of our game screen. Used to check for illegal moves
+  //The width and height of our game screen. Used to check for illegal moves
   const size_t width_;
   const size_t height_;
   const size_t center_tile_;
 
-  // Stores all the fallen tetrominoes. Used by the app to draw.
+  //Stores all the fallen tetrominoes. Used by the app to draw.
   std::vector<std::vector<cinder::Color>> screen_;
 
-  // The tetromino that is falling down
+  //The tetromino that is falling down
   Tetromino tetromino_;
 
-  // Whether or not the game is over
+  //Whether or not the game is over
   bool game_over_;
 
-  // The current score based on how many lines were cleared
+  //The current score based on how many lines were cleared
   size_t score_;
 
-  // The index of the color theme that corresponds to the kThemes array
+  //The index of the color theme that corresponds to the kThemes array
   size_t color_theme_index_;
 };
 

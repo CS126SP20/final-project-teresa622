@@ -1,11 +1,17 @@
 # Development
 
 ---
-- **4/30/20** Modified some functions to make them more testable for rotation conflicts
+- **5/1/20** Tested for restarting game and score updating based on cleared lines
+    * Add live update of score on the screen
+    * Consider adding beginning screen?
+    * Should Location be tested?
+- **4/30/20** Modified some functions to make them more testable for rotation conflicts and then tested for this 
+conflict
     * Check that all comments are followed by spaces
     * Create a utils file to avoid repetitive code for generating a random number? Or would this be unnecessary
     for just one function?
     * Rename row and column in our location class to better suit the interpretation of row and column for Tetris
+    * Test that the score correctly increases if line(s) are cleared
 - **4/27/20** Added more tests (movemnt conflicts) for engine
     * Finish up testing engine (rotation conflict testing)
 - **4/26/20** Implemented sound effects

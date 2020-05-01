@@ -6,16 +6,16 @@
 #include "mylibrary/color_theme.h"
 #include <utility>
 
-namespace mylibrary {
+namespace tetris {
 
 Engine::Engine(size_t width, size_t height)
     : width_{width}, height_{height}, game_over_{false}, score_{0},
     tetromino_{0, 0}, center_tile_{width_ / 2} {
 
-  // Fill our screen with all white pixels to start with
+  //Fill our screen with all white pixels to start with
   screen_.resize(height, std::vector<cinder::Color>(width, kWhite));
 
-  // Get a random color theme for this game
+  //Get a random color theme for this game
   color_theme_index_ = GenerateColorThemeIndex();
 
   tetromino_ = Tetromino(center_tile_, color_theme_index_);
@@ -27,17 +27,17 @@ Engine::Engine(size_t width, size_t height,
   : width_{width}, height_{height}, game_over_{false}, score_{0},
   tetromino_{0, 0}, center_tile_{width_ / 2},
 
-    // Fill our screen with the pixels we were given
+    //Fill our screen with the pixels we were given
   screen_{std::move(screen)} {
 
-  // Get a random color theme for this game
+  //Get a random color theme for this game
   color_theme_index_ = GenerateColorThemeIndex();
 
   tetromino_ = Tetromino(center_tile_, color_theme_index_, tetromino_type);
 }
 
 size_t Engine::GenerateColorThemeIndex() {
-  // Credit: See tetromino.cc
+  //Credit: See tetromino.cc
   struct timespec ts{};
   clock_gettime(CLOCK_MONOTONIC, &ts);
 

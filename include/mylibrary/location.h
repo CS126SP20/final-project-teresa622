@@ -7,7 +7,7 @@
 
 #include <ostream>
 
-namespace mylibrary {
+namespace tetris {
 // Represents a location on the board.
 class Location {
  public:

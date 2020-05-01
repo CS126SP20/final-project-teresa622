@@ -91,11 +91,11 @@ class MyApp : public cinder::app::App {
   //Time tracker to determine when engine_.Step() should be called again
   std::chrono::time_point<std::chrono::system_clock> last_time_;
 
-  mylibrary::Engine engine_;
+  tetris::Engine engine_;
 
   //Interacts with our leaderboard database. Used to draw the top scores
   //in the end screen
-  mylibrary::LeaderBoard leaderboard_;
+  tetris::LeaderBoard leaderboard_;
 
   //The size of each tile on the app screen
   size_t tile_size_;
@@ -104,7 +104,7 @@ class MyApp : public cinder::app::App {
   std::string username_;
 
   //Keeps the leaderboard players
-  std::vector<mylibrary::Player> top_players_;
+  std::vector<tetris::Player> top_players_;
 
   //The speed at which the game is updated. Determines how fast the tetrominoes
   //fall down the screen.

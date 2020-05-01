@@ -4,7 +4,7 @@
 
 #ifndef FINALPROJECT_SRC_TETROMINO_TYPE_H_
 #define FINALPROJECT_SRC_TETROMINO_TYPE_H_
-namespace mylibrary {
+namespace tetris {
 
 //All the types of tetrominoes that exist
 enum class TetrominoType { kO, kL, kS, kZ, kI, kJ, kT };

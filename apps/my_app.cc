@@ -54,7 +54,7 @@ MyApp::MyApp()
     tile_size_{FLAGS_tilesize},
     username_{FLAGS_name},
     speed_{kStartSpeed},
-    outline_color_{mylibrary::kThemeOutline[engine_.GetColorThemeIndex()]},
+    outline_color_{tetris::kThemeOutline[engine_.GetColorThemeIndex()]},
     paused_{false}{}
 
 void MyApp::setup() {
@@ -180,33 +180,33 @@ void MyApp::keyDown(KeyEvent event) {
     case KeyEvent::KEY_UP:
     case KeyEvent::KEY_k:
     case KeyEvent::KEY_w: {
-      engine_.UpdateMovement(mylibrary::Movement::kRotate);
+      engine_.UpdateMovement(tetris::Movement::kRotate);
       break;
     }
 
     case KeyEvent::KEY_DOWN:
     case KeyEvent::KEY_j:
     case KeyEvent::KEY_s: {
-      engine_.UpdateMovement(mylibrary::Movement::kDown);
+      engine_.UpdateMovement(tetris::Movement::kDown);
       break;
     }
 
     case KeyEvent::KEY_LEFT:
     case KeyEvent::KEY_h:
     case KeyEvent::KEY_a: {
-      engine_.UpdateMovement(mylibrary::Movement::kLeft);
+      engine_.UpdateMovement(tetris::Movement::kLeft);
       break;
     }
 
     case KeyEvent::KEY_RIGHT:
     case KeyEvent::KEY_l:
     case KeyEvent::KEY_d: {
-      engine_.UpdateMovement(mylibrary::Movement::kRight);
+      engine_.UpdateMovement(tetris::Movement::kRight);
       break;
     }
 
     case KeyEvent::KEY_SPACE: {
-      engine_.UpdateMovement(mylibrary::Movement::kFall);
+      engine_.UpdateMovement(tetris::Movement::kFall);
       fall_sound_->start();
       break;
     }
@@ -231,11 +231,11 @@ void MyApp::keyDown(KeyEvent event) {
 }
 
 void MyApp::DrawTetromino() {
-  mylibrary::Tetromino tetromino = engine_.GetTetromino();
+  tetris::Tetromino tetromino = engine_.GetTetromino();
 
   //Loop through each pixel and draw it in our app
-  for (int i = 0; i < mylibrary::kPixelsInTetromino; i++) {
-    mylibrary::Location loc = tetromino.GetPixelLocation(i);
+  for (int i = 0; i < tetris::kPixelsInTetromino; i++) {
+    tetris::Location loc = tetromino.GetPixelLocation(i);
     cinder::gl::color(tetromino.GetColor());
 
     //If this location is above the screen, don't draw it
@@ -255,11 +255,11 @@ void MyApp::DrawTetromino() {
 }
 
 void MyApp::DrawProjection() {
-  mylibrary::Tetromino projection_tetromino = engine_.GetProjection();
+  tetris::Tetromino projection_tetromino = engine_.GetProjection();
 
   //Loop through each pixel and draw its outline in black.
-  for (int i = 0; i < mylibrary::kPixelsInTetromino; i++) {
-    mylibrary::Location loc = projection_tetromino.GetPixelLocation(i);
+  for (int i = 0; i < tetris::kPixelsInTetromino; i++) {
+    tetris::Location loc = projection_tetromino.GetPixelLocation(i);
     cinder::gl::color(0, 0, 0);
 
     //If this location is above the screen, don't draw it
@@ -356,7 +356,7 @@ void MyApp::DrawGameOver() {
   //Print the top 3 scores, one row below another
   PrintText("High Scores", color, size,
       {center.x, center.y + (++row) * 50});
-  for (const  mylibrary::Player& player : top_players_) {
+  for (const tetris::Player& player : top_players_) {
     std::stringstream ss;
     ss << player.name << ": " << player.score;
     PrintText(ss.str(), color, size,

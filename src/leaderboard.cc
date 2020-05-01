@@ -8,7 +8,7 @@
 
 #include "mylibrary/player.h"
 
-namespace mylibrary {
+namespace tetris {
 
 LeaderBoard::LeaderBoard(const std::string& db_path) : db_{db_path} {
   db_ << "CREATE TABLE if not exists leaderboard (\n"

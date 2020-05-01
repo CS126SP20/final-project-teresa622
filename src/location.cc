@@ -4,7 +4,7 @@
 
 #include "mylibrary/location.h"
 
-namespace mylibrary {
+namespace tetris {
 
 Location::Location(int row, int col) : row_(row), col_(col) {}
 

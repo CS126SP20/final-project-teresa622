@@ -9,14 +9,13 @@
 
 
 TEST_CASE("Tetromino I") {
-  mylibrary::Tetromino tetromino
-  (5, 0, mylibrary::TetrominoType::kI);
+  tetris::Tetromino tetromino
+  (5, 0, tetris::TetrominoType::kI);
 
   SECTION("Initializing I") {
-    mylibrary::Location pixels[4] = {mylibrary::Location(3, 1),
-                                     mylibrary::Location (4, 1),
-                                     mylibrary::Location(5, 1),
-                                     mylibrary::Location(6, 1)};
+    tetris::Location pixels[4] = {
+        tetris::Location(3, 1), tetris::Location (4, 1), tetris::Location(5, 1),
+        tetris::Location(6, 1)};
     for (int i = 0; i < 4; i++) {
       REQUIRE(tetromino.GetPixelLocation(i) == pixels[i]);
     }
@@ -25,43 +24,41 @@ TEST_CASE("Tetromino I") {
   //Tests Move Tetromino here
   SECTION("Move Tetromino: positive values") {
     tetromino.MoveTetromino(3, 1);
-    REQUIRE(tetromino.GetPixelLocation(0) == mylibrary::Location(6, 2));
+    REQUIRE(tetromino.GetPixelLocation(0) == tetris::Location(6, 2));
   }
 
   SECTION("Move Tetromino: negative values") {
     tetromino.MoveTetromino(-3, -1);
-    REQUIRE(tetromino.GetPixelLocation(0) == mylibrary::Location(0, 0));
+    REQUIRE(tetromino.GetPixelLocation(0) == tetris::Location(0, 0));
   }
 }
 
 TEST_CASE("Tetromino J") {
-  mylibrary::Tetromino tetromino
-      (5, 0, mylibrary::TetrominoType::kJ);
+  tetris::Tetromino tetromino
+      (5, 0, tetris::TetrominoType::kJ);
 
   SECTION("Initializing J") {
-    mylibrary::Location pixels[4] = {mylibrary::Location(5, 0),
-                                     mylibrary::Location (5, 1),
-                                     mylibrary::Location(5, 2),
-                                     mylibrary::Location(4, 2)};
+    tetris::Location pixels[4] = {
+        tetris::Location(5, 0), tetris::Location (5, 1), tetris::Location(5, 2),
+        tetris::Location(4, 2)};
     for (int i = 0; i < 4; i++) {
       REQUIRE(tetromino.GetPixelLocation(i) == pixels[i]);
     }
   }
 
   SECTION("Get Tetromino Type") {
-    REQUIRE(tetromino.GetTetrominoType() == mylibrary::TetrominoType::kJ);
+    REQUIRE(tetromino.GetTetrominoType() == tetris::TetrominoType::kJ);
   }
 }
 
 TEST_CASE("Tetromino L") {
-  mylibrary::Tetromino tetromino
-      (5, 0, mylibrary::TetrominoType::kL);
+  tetris::Tetromino tetromino
+      (5, 0, tetris::TetrominoType::kL);
 
   SECTION("Initializing L") {
-    mylibrary::Location pixels[4] = {mylibrary::Location(5, 0),
-                                     mylibrary::Location (5, 1),
-                                     mylibrary::Location(5, 2),
-                                     mylibrary::Location(6, 2)};
+    tetris::Location pixels[4] = {
+        tetris::Location(5, 0), tetris::Location (5, 1), tetris::Location(5, 2),
+        tetris::Location(6, 2)};
     for (int i = 0; i < 4; i++) {
       REQUIRE(tetromino.GetPixelLocation(i) == pixels[i]);
     }
@@ -69,12 +66,10 @@ TEST_CASE("Tetromino L") {
 }
 
 TEST_CASE("Tetromino O") {
-  mylibrary::Tetromino tetromino
-      (5, 0, mylibrary::TetrominoType::kO);
-  mylibrary::Location pixels[4] = {mylibrary::Location(4, 0),
-                                   mylibrary::Location (5, 0),
-                                   mylibrary::Location(4, 1),
-                                   mylibrary::Location(5, 1)};
+  tetris::Tetromino tetromino
+      (5, 0, tetris::TetrominoType::kO);
+  tetris::Location pixels[4] = {tetris::Location(4, 0), tetris::Location (5, 0),
+                                tetris::Location(4, 1), tetris::Location(5, 1)};
 
   SECTION("Initializing O") {
     for (int i = 0; i < 4; i++) {
@@ -92,14 +87,13 @@ TEST_CASE("Tetromino O") {
 }
 
 TEST_CASE("Tetromino T") {
-  mylibrary::Tetromino tetromino
-      (5, 0, mylibrary::TetrominoType::kT);
+  tetris::Tetromino tetromino
+      (5, 0, tetris::TetrominoType::kT);
 
   SECTION("Initializing T") {
-    mylibrary::Location pixels[4] = {mylibrary::Location(4, 1),
-                                     mylibrary::Location (5, 1),
-                                     mylibrary::Location(6, 1),
-                                     mylibrary::Location(5, 0)};
+    tetris::Location pixels[4] = {
+        tetris::Location(4, 1), tetris::Location (5, 1), tetris::Location(6, 1),
+        tetris::Location(5, 0)};
     for (int i = 0; i < 4; i++) {
       REQUIRE(tetromino.GetPixelLocation(i) == pixels[i]);
     }
@@ -110,11 +104,10 @@ TEST_CASE("Tetromino T") {
     tetromino.RotateTetromino();
     //The rotation point for T tetromino is the center joint that connects
     //the three other pixels
-    REQUIRE(tetromino.GetRotationPoint() == mylibrary::Location(5, 1));
-    mylibrary::Location pixels[4] = {mylibrary::Location(5, 0),
-                                     mylibrary::Location (5, 1),
-                                     mylibrary::Location(5, 2),
-                                     mylibrary::Location(6, 1)};
+    REQUIRE(tetromino.GetRotationPoint() == tetris::Location(5, 1));
+    tetris::Location pixels[4] = {
+        tetris::Location(5, 0), tetris::Location (5, 1), tetris::Location(5, 2),
+        tetris::Location(6, 1)};
     for (int i = 0; i < 4; i++) {
       REQUIRE(tetromino.GetPixelLocation(i) == pixels[i]);
     }
@@ -122,14 +115,13 @@ TEST_CASE("Tetromino T") {
 }
 
 TEST_CASE("Tetromino S") {
-  mylibrary::Tetromino tetromino
-      (5, 0, mylibrary::TetrominoType::kS);
+  tetris::Tetromino tetromino
+      (5, 0, tetris::TetrominoType::kS);
 
   SECTION("Initializing S") {
-    mylibrary::Location pixels[4] = {mylibrary::Location(4, 1),
-                                     mylibrary::Location (5, 1),
-                                     mylibrary::Location(5, 0),
-                                     mylibrary::Location(6, 0)};
+    tetris::Location pixels[4] = {
+        tetris::Location(4, 1), tetris::Location (5, 1), tetris::Location(5, 0),
+        tetris::Location(6, 0)};
     for (int i = 0; i < 4; i++) {
       REQUIRE(tetromino.GetPixelLocation(i) == pixels[i]);
     }
@@ -137,14 +129,13 @@ TEST_CASE("Tetromino S") {
 }
 
 TEST_CASE("Tetromino Z") {
-  mylibrary::Tetromino tetromino
-      (5, 0, mylibrary::TetrominoType::kZ);
+  tetris::Tetromino tetromino
+      (5, 0, tetris::TetrominoType::kZ);
 
   SECTION("Initializing Z") {
-    mylibrary::Location pixels[4] = {mylibrary::Location(6, 1),
-                                     mylibrary::Location (5, 1),
-                                     mylibrary::Location(5, 0),
-                                     mylibrary::Location(4, 0)};
+    tetris::Location pixels[4] = {
+        tetris::Location(6, 1), tetris::Location (5, 1), tetris::Location(5, 0),
+        tetris::Location(4, 0)};
     for (int i = 0; i < 4; i++) {
       REQUIRE(tetromino.GetPixelLocation(i) == pixels[i]);
     }

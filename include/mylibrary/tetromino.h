@@ -12,7 +12,7 @@
 #include "mylibrary/color_theme.h"
 #include <cinder/Color.h>
 
-namespace mylibrary {
+namespace tetris {
 
 // The constant number of types of tetrominoes
 const size_t kNumTetrominoTypes = 7;

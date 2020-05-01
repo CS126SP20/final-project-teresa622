@@ -9,7 +9,7 @@
 
 #include "player.h"
 
-namespace mylibrary {
+namespace tetris {
 
 class LeaderBoard {
  public:

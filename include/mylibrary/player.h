@@ -6,7 +6,7 @@
 #define FINALPROJECT_SRC_PLAYER_H_
 #include <string>
 
-namespace mylibrary {
+namespace tetris {
 
 //Stores each player's name and score. Used for score keeping in the database.
 struct Player {

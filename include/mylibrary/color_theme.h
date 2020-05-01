@@ -7,7 +7,7 @@
 
 #include <cinder/Color.h>
 
-namespace mylibrary {
+namespace tetris {
 
 const size_t kNumOfThemes = 6;
 const cinder::Color kThemes[kNumOfThemes][7] =
