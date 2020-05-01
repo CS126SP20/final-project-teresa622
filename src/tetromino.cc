@@ -161,4 +161,4 @@ cinder::Color Tetromino::GetColor() {
   return color_;
 }
 
-}
+}   //  namespace tetris

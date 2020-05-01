@@ -15,6 +15,6 @@ struct Player {
   size_t score;
 };
 
-}  // namespace mylibrary
+}  // namespace tetris
 
 #endif  // FINALPROJECT_SRC_PLAYER_H_

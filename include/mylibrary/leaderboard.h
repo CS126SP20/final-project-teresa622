@@ -37,5 +37,5 @@ class LeaderBoard {
   sqlite::database db_;
 };
 
-}  // namespace mylibrary
+}  // namespace tetris
 #endif  // FINALPROJECT_SRC_LEADERBOARD_H_

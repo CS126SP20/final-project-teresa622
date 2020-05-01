@@ -8,27 +8,15 @@
 #include <ostream>
 
 namespace tetris {
+
+//This class was inspired by the Snake Project Assignment from CS126.
 // Represents a location on the board.
 class Location {
  public:
   Location(int row, int col);
 
   // Comparison operators.
-  bool operator()(const Location& lhs, const Location& rhs) const;
   bool operator==(const Location& rhs) const;
-  bool operator!=(const Location& rhs) const;
-  bool operator<(const Location& rhs) const;
-  bool operator<=(const Location& rhs) const;
-  bool operator>(const Location& rhs) const;
-  bool operator>=(const Location& rhs) const;
-
-  // Vector operators.
-  Location operator+(const Location& rhs) const;
-  // Note: Always returns positive coordinates.
-  Location operator%(const Location& rhs) const;
-  Location operator-(const Location& rhs) const;
-  Location& operator+=(const Location& rhs);
-  Location operator-() const;
 
   // Accessors.
   int Row() const;
@@ -39,8 +27,6 @@ class Location {
   int col_;
 };
 
-std::ostream& operator<<(std::ostream& os, const Location& location);
-
-}  // namespace mylibrary
+}  // namespace tetris
 
 #endif  // FINALPROJECT_SRC_LOCATION_H_

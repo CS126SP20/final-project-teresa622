@@ -130,6 +130,6 @@ class Engine {
   size_t color_theme_index_;
 };
 
-}   //namespace mylibrary
+}   //namespace tetris
 
 #endif  // FINALPROJECT_SRC_ENGINE_H_

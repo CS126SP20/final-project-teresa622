@@ -244,7 +244,8 @@ void MyApp::DrawTetromino() {
     }
 
     cinder::Rectf pixel(loc.Row() * tile_size_,
-                  loc.Col() * tile_size_, (loc.Row() * tile_size_) + tile_size_,
+                  loc.Col() * tile_size_,
+                  (loc.Row() * tile_size_) + tile_size_,
                   (loc.Col() * tile_size_) + tile_size_);
     cinder::gl::drawSolidRect(pixel);
 
@@ -257,7 +258,7 @@ void MyApp::DrawTetromino() {
 void MyApp::DrawProjection() {
   tetris::Tetromino projection_tetromino = engine_.GetProjection();
 
-  //Loop through each pixel and draw its outline in black.
+  //Loop through each pixel and draw its outline in black
   for (int i = 0; i < tetris::kPixelsInTetromino; i++) {
     tetris::Location loc = projection_tetromino.GetPixelLocation(i);
     cinder::gl::color(0, 0, 0);

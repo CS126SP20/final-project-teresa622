@@ -79,6 +79,6 @@ enum class TetrominoType { kO, kL, kS, kZ, kI, kJ, kT };
  * |___________________|
  */
 
-}   // namespace mylibrary
+}   // namespace tetris
 
 #endif  // FINALPROJECT_SRC_TETROMINO_TYPE_H_

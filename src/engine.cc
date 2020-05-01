@@ -264,5 +264,5 @@ size_t Engine::GetColorThemeIndex() {
   return color_theme_index_;
 }
 
-}   // namespace mylibrary
+}   // namespace tetris
 

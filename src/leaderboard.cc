@@ -49,4 +49,4 @@ std::vector<Player> LeaderBoard::RetrieveHighScores(const size_t limit) {
   }
 }
 
-}
+}   //namespace tetris
