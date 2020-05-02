@@ -70,12 +70,6 @@ class Tetromino {
    */
   void InitializePixels(int center_tile);
 
-  /**
-   * Generates a random number 0-6 for a tetromino type
-   * @return the number that is the index of the tetromino type we are creating
-   */
-  static size_t GenerateRandTetrominoIndex();
-
   // Generates each type of tetromino
   void GenerateI(int center_tile);
   void GenerateJ(int center_tile);

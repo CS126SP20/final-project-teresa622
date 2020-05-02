@@ -3,14 +3,13 @@
 //
 
 #include "mylibrary/tetromino.h"
-
-#include <ctime>
+#include "mylibrary/utils.h"
 
 namespace tetris {
 
 Tetromino::Tetromino(int center_tile, size_t theme_index) {
   //Generate a random type of tetromino
-  size_t rand_tetromino_index = GenerateRandTetrominoIndex();
+  size_t rand_tetromino_index = utils::RandNumInRange(kNumTetrominoTypes);
 
   //Initialize our tetromino type and color with the random number
   tetromino_type_ = kTetrominoTypes[rand_tetromino_index];
@@ -21,26 +20,13 @@ Tetromino::Tetromino(int center_tile, size_t theme_index) {
 Tetromino::Tetromino(int center_tile, size_t theme_index,
     TetrominoType tetromino_type) {
   //Generate a random color
-  size_t rand_tetromino_index = GenerateRandTetrominoIndex();
+  size_t rand_tetromino_index = utils::RandNumInRange(kNumTetrominoTypes);
 
   //Initialize our tetromino with the type specified in the parameter
   //and give it a random color
   tetromino_type_ = tetromino_type;
   color_ = kThemes[theme_index][rand_tetromino_index];
   InitializePixels(center_tile);
-}
-
-size_t Tetromino::GenerateRandTetrominoIndex() {
-  //Generate a random number quickly: 0-6
-  //Credit: https://stackoverflow.com/questions/20201141/same-random-numbers-generated-every-time-in-c
-  //(^ line cannot be less than 80 characters)
-  //Answered by rkyser
-  struct timespec ts{};
-  clock_gettime(CLOCK_MONOTONIC, &ts);
-
-  /* using nano-seconds instead of seconds */
-  srand((time_t)ts.tv_nsec);
-  return rand() % kNumTetrominoTypes;
 }
 
 void Tetromino::InitializePixels(int center_tile) {

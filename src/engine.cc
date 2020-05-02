@@ -4,6 +4,8 @@
 
 #include "mylibrary/engine.h"
 #include "mylibrary/color_theme.h"
+#include "mylibrary/utils.h"
+
 #include <utility>
 
 namespace tetris {
@@ -16,7 +18,7 @@ Engine::Engine(size_t width, size_t height)
   screen_.resize(height, std::vector<cinder::Color>(width, kWhite));
 
   //Get a random color theme for this game
-  color_theme_index_ = GenerateColorThemeIndex();
+  color_theme_index_ = utils::RandNumInRange(kNumOfThemes);
 
   tetromino_ = Tetromino(center_tile_, color_theme_index_);
 }
@@ -31,21 +33,9 @@ Engine::Engine(size_t width, size_t height,
   screen_{std::move(screen)} {
 
   //Get a random color theme for this game
-  color_theme_index_ = GenerateColorThemeIndex();
+  color_theme_index_ = utils::RandNumInRange(kNumOfThemes);
 
   tetromino_ = Tetromino(center_tile_, color_theme_index_, tetromino_type);
-}
-
-size_t Engine::GenerateColorThemeIndex() {
-  //Credit: See tetromino.cc
-  struct timespec ts{};
-  clock_gettime(CLOCK_MONOTONIC, &ts);
-
-  /* using nano-seconds instead of seconds */
-  srand((time_t)ts.tv_nsec);
-
-  //Generate a random number 0-5
-  return rand() % kNumOfThemes;
 }
 
 void Engine::Step() {
@@ -239,7 +229,7 @@ void Engine::Reset() {
   score_ = {0};
   screen_.clear();
   screen_.resize(height_, std::vector<cinder::Color>(width_, kWhite));
-  GenerateColorThemeIndex();
+  color_theme_index_ = utils::RandNumInRange(kNumOfThemes);
   tetromino_ = Tetromino(center_tile_, color_theme_index_);
 }
 
