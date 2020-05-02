@@ -11,7 +11,7 @@
 #include "mylibrary/leaderboard.h"
 #include "mylibrary/tetromino.h"
 
-namespace myapp {
+namespace tetrisapp {
 
 //Constant width and height of the game screen
 const size_t kWidth = 12;
@@ -134,6 +134,6 @@ class MyApp : public cinder::app::App {
   cinder::audio::VoiceRef game_over_sound_;
 };
 
-}  // namespace myapp
+}  // namespace tetrisapp
 
 #endif  // FINALPROJECT_APPS_MYAPP_H_

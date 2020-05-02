@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <cinder/Color.h>
+
 #include "movement.h"
 #include "mylibrary/tetromino.h"
 
@@ -27,6 +28,7 @@ class Engine {
    * @param height the height of the screen
    */
   Engine(size_t width, size_t height);
+
    /**
     * Engine constructor. Allows initialization of specific screen to begin with
     * Currently used for testing purposes, but can be used in the future

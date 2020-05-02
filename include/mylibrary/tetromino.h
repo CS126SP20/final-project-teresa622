@@ -6,11 +6,11 @@
 #define FINALPROJECT_SRC_TETROMINO_H_
 
 #include <vector>
+#include <cinder/Color.h>
 
 #include "mylibrary/location.h"
 #include "mylibrary/tetromino_type.h"
 #include "mylibrary/color_theme.h"
-#include <cinder/Color.h>
 
 namespace tetris {
 

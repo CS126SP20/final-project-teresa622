@@ -1,18 +1,19 @@
 // Copyright (c) 2020 [Your Name]. All rights reserved.
 
+#include "tetris_app.h"
+
+#include <cinder/Font.h>
+#include <cinder/Text.h>
 #include <cinder/app/App.h>
+#include <cinder/audio/Voice.h>
 #include <cinder/gl/draw.h>
 #include <cinder/gl/gl.h>
 #include <gflags/gflags.h>
-#include <cinder/Text.h>
-#include <cinder/Font.h>
-#include <cinder/audio/Voice.h>
 
-#include "my_app.h"
-#include "mylibrary/engine.h"
 #include "mylibrary/color_theme.h"
+#include "mylibrary/engine.h"
 
-namespace myapp {
+namespace tetrisapp {
 
 //Used to find the path to access our scoring database
 const char kDbPath[] = "tetris.db";
@@ -212,7 +213,6 @@ void MyApp::keyDown(KeyEvent event) {
     }
 
     case KeyEvent::KEY_p: {
-
       //Stop or start the music depending on if the user is pausing or unpausing
       if (!paused_) {
         theme_music_->pause();
@@ -376,4 +376,4 @@ void MyApp::DrawGameOver() {
   printed_game_over_ = true;
 }
 
-}  // namespace myapp
+}  // namespace tetrisapp

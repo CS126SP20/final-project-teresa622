@@ -4,12 +4,12 @@
 #include <cinder/app/RendererGl.h>
 #include <gflags/gflags.h>
 
-#include "my_app.h"
+#include "tetris_app.h"
 
 using cinder::app::App;
 using cinder::app::RendererGl;
 
-namespace myapp {
+namespace tetrisapp {
 
 //These are the gflags that the user can modify via command line arguments.
 DEFINE_uint32(tilesize, 30, "the size of each tile");
@@ -47,10 +47,10 @@ void SetUp(App::Settings* settings) {
   settings->setTitle("Tetris");
 }
 
-}  // namespace myapp
+}  // namespace tetrisapp
 
 
 // This is a macro that runs the application.
-CINDER_APP(myapp::MyApp,
-           RendererGl(RendererGl::Options().msaa(myapp::kSamples)),
-           myapp::SetUp)
+CINDER_APP(tetrisapp::MyApp,
+           RendererGl(RendererGl::Options().msaa(tetrisapp::kSamples)),
+           tetrisapp::SetUp)
