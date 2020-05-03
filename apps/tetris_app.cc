@@ -174,6 +174,7 @@ void MyApp::draw() {
   DrawTetromino();
   DrawProjection();
   DrawScreen();
+  DrawScore();
 }
 
 void MyApp::keyDown(KeyEvent event) {
@@ -314,6 +315,23 @@ void MyApp::DrawScreen() {
   }
 }
 
+void MyApp::DrawScore(){
+  //Use the score variable to get the current score of the player.
+  const std::string score_text = std::to_string(score_);
+
+  //Make the text blue
+  const cinder::Color color = {0, 0, 1};
+
+  //We want our score text to be across the top of the screen
+  const cinder::ivec2 size = {FLAGS_tilesize * kWidth, FLAGS_tilesize};
+
+  //We want the score to be in the upper left corner of the screen
+  const cinder::vec2 loc =
+      {FLAGS_tilesize, FLAGS_tilesize};
+
+  PrintText(score_text, color, size, loc);
+}
+
 template <typename C>
 void MyApp::PrintText(const std::string& text, const C& color,
     const cinder::ivec2& size, const cinder::vec2& loc) {
@@ -347,21 +365,21 @@ void MyApp::DrawGameOver() {
   game_over_sound_->start();
 
   //Get the location, size, and color of our text
-  const cinder::vec2 center = {getWindowCenter().x, 40};
-  const cinder::ivec2 size = {200, 50};
+  const cinder::vec2 center = {getWindowCenter().x, FLAGS_tilesize};
+  const cinder::ivec2 size = {500, FLAGS_tilesize};
   const cinder::Color color = cinder::Color::white();
 
   size_t row = 1;
-  PrintText("Game Over :(", color, size, center);
+  PrintText("Game Over", color, size, center);
 
   //Print the top 3 scores, one row below another
-  PrintText("High Scores", color, size,
-      {center.x, center.y + (++row) * 50});
+  PrintText("Leaderboard", color, size,
+      {center.x, center.y + (++row) * FLAGS_tilesize});
   for (const tetris::Player& player : top_players_) {
     std::stringstream ss;
     ss << player.name << ": " << player.score;
     PrintText(ss.str(), color, size,
-        {center.x, center.y + (++row) * 50});
+        {center.x, center.y + (++row) * FLAGS_tilesize});
   }
 
   //Create a space before printing the next score
@@ -369,9 +387,9 @@ void MyApp::DrawGameOver() {
 
   //Print the player's most recent score
   PrintText("Your Score", color, size,
-      {center.x, center.y + (++row) * 50});
+      {center.x, center.y + (++row) * FLAGS_tilesize});
   PrintText(std::to_string(engine_.GetScore()), color, size,
-      {center.x, center.y + (++row) * 50});
+      {center.x, center.y + (++row) * FLAGS_tilesize});
 
   printed_game_over_ = true;
 }

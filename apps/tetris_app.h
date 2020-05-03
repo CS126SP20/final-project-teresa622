@@ -73,6 +73,16 @@ class MyApp : public cinder::app::App {
    */
   void DrawProjection();
 
+  /**
+   * Draws the score of the player as they play the game.
+   * Updates as the player clears more lines.
+   */
+  void DrawScore();
+
+  /**
+   * setup helper function. Loads up all the music and sound effect files into
+   * VoiceRefs
+   */
   void SetUpSounds();
 
   /**
