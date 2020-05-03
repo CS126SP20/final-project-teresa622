@@ -1,6 +1,8 @@
 # Development
 
 ---
+- **5/3/20** Implemented live scoring feature that shows the player the updated score as they play the game.
+    * Work on writing up the README.md
 - **5/2/20** Implemented utils class to avoid duplicate code in files and implemented a simple test for it
 - **5/1/20** Tested for restarting game and score updating based on cleared lines
     * Add live update of score on the screen

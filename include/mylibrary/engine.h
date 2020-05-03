@@ -17,7 +17,7 @@ namespace tetris {
 const size_t kPixelsInTetromino = 4;
 
 //The color of the locations without tetrominoes are white.
-const cinder::Color kWhite(1, 1, 1);
+const cinder::Color kWhiteColor(1, 1, 1);
 
 class Engine {
  public:

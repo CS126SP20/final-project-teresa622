@@ -49,7 +49,7 @@ DECLARE_string(name);
 
 using cinder::app::KeyEvent;
 
-MyApp::MyApp()
+TetrisApp::TetrisApp()
   : engine_{kWidth, kHeight},
     leaderboard_{cinder::app::getAssetPath(kDbPath).string()},
     tile_size_{FLAGS_tilesize},
@@ -58,14 +58,14 @@ MyApp::MyApp()
     outline_color_{tetris::kThemeOutline[engine_.GetColorThemeIndex()]},
     paused_{false}{}
 
-void MyApp::setup() {
+void TetrisApp::setup() {
   cinder::gl::enableDepthWrite();
   cinder::gl::enableDepthRead();
 
   SetUpSounds();
 }
 
-void MyApp::SetUpSounds() {
+void TetrisApp::SetUpSounds() {
   //Tetris theme song
   ci::audio::SourceFileRef theme_music_file = cinder::audio::load
       (cinder::app::loadAsset("Tetris.mp3"));
@@ -93,7 +93,7 @@ void MyApp::SetUpSounds() {
   game_over_sound_ = cinder::audio::Voice::create(game_over_file);
 }
 
-void MyApp::update() {
+void TetrisApp::update() {
   if (game_over_) {
     // Fill our vector with the top three scores in our leaderboard
     if (top_players_.empty()) {
@@ -145,7 +145,7 @@ void MyApp::update() {
 
 }
 
-void MyApp::draw() {
+void TetrisApp::draw() {
   cinder::gl::enableAlphaBlending();
 
   //If the game has ended, draw the end screen.
@@ -177,7 +177,7 @@ void MyApp::draw() {
   DrawScore();
 }
 
-void MyApp::keyDown(KeyEvent event) {
+void TetrisApp::keyDown(KeyEvent event) {
   switch (event.getCode()) {
     case KeyEvent::KEY_UP:
     case KeyEvent::KEY_k:
@@ -209,7 +209,12 @@ void MyApp::keyDown(KeyEvent event) {
 
     case KeyEvent::KEY_SPACE: {
       engine_.UpdateMovement(tetris::Movement::kFall);
-      fall_sound_->start();
+
+      //Only play this sound effect if the player is still playing
+      if (!game_over_) {
+        fall_sound_->start();
+      }
+
       break;
     }
 
@@ -231,7 +236,7 @@ void MyApp::keyDown(KeyEvent event) {
   }
 }
 
-void MyApp::DrawTetromino() {
+void TetrisApp::DrawTetromino() {
   tetris::Tetromino tetromino = engine_.GetTetromino();
 
   //Loop through each pixel and draw it in our app
@@ -256,7 +261,7 @@ void MyApp::DrawTetromino() {
   }
 }
 
-void MyApp::DrawProjection() {
+void TetrisApp::DrawProjection() {
   tetris::Tetromino projection_tetromino = engine_.GetProjection();
 
   //Loop through each pixel and draw its outline in black
@@ -277,7 +282,7 @@ void MyApp::DrawProjection() {
   }
 }
 
-void MyApp::DrawScreen() {
+void TetrisApp::DrawScreen() {
   //Credit for syntax for looping through a 2D vector:
   //https://stackoverflow.com/questions/1784573/iterator-for-2d-vector?rq=1
   //Answered by Austin Hyde
@@ -292,7 +297,8 @@ void MyApp::DrawScreen() {
 
       //Color the non-white elements in the 2D vector > those are the the pixels
       //that have already touched a surface
-      if (*col != cinder::Color(1,1,1)) {
+      if (*col != tetris::kWhiteColor) {
+        //The color is the value at this location
         cinder::gl::color(*col);
 
         //Draws the pixel
@@ -315,12 +321,12 @@ void MyApp::DrawScreen() {
   }
 }
 
-void MyApp::DrawScore(){
+void TetrisApp::DrawScore(){
   //Use the score variable to get the current score of the player.
   const std::string score_text = std::to_string(score_);
 
   //Make the text blue
-  const cinder::Color color = {0, 0, 1};
+  const cinder::Color color = {0, 0, 0};
 
   //We want our score text to be across the top of the screen
   const cinder::ivec2 size = {FLAGS_tilesize * kWidth, FLAGS_tilesize};
@@ -333,7 +339,7 @@ void MyApp::DrawScore(){
 }
 
 template <typename C>
-void MyApp::PrintText(const std::string& text, const C& color,
+void TetrisApp::PrintText(const std::string& text, const C& color,
     const cinder::ivec2& size, const cinder::vec2& loc) {
   cinder::gl::color(color);
 
@@ -355,7 +361,7 @@ void MyApp::PrintText(const std::string& text, const C& color,
   cinder::gl::draw(texture, locp);
 }
 
-void MyApp::DrawGameOver() {
+void TetrisApp::DrawGameOver() {
   //If we've already printed once, there's no need to keep printing.
   //Allows for lazy printing.
   if (printed_game_over_) return;
@@ -382,7 +388,7 @@ void MyApp::DrawGameOver() {
         {center.x, center.y + (++row) * FLAGS_tilesize});
   }
 
-  //Create a space before printing the next score
+  //Create a space before printing the next score - it's a different section
   row++;
 
   //Print the player's most recent score

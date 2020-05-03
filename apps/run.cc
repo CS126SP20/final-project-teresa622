@@ -51,6 +51,6 @@ void SetUp(App::Settings* settings) {
 
 
 // This is a macro that runs the application.
-CINDER_APP(tetrisapp::MyApp,
+CINDER_APP(tetrisapp::TetrisApp,
            RendererGl(RendererGl::Options().msaa(tetrisapp::kSamples)),
            tetrisapp::SetUp)

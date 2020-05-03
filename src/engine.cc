@@ -15,7 +15,7 @@ Engine::Engine(size_t width, size_t height)
     tetromino_{0, 0}, center_tile_{width_ / 2} {
 
   //Fill our screen with all white pixels to start with
-  screen_.resize(height, std::vector<cinder::Color>(width, kWhite));
+  screen_.resize(height, std::vector<cinder::Color>(width, kWhiteColor));
 
   //Get a random color theme for this game
   color_theme_index_ = utils::RandNumInRange(kNumOfThemes);
@@ -148,7 +148,7 @@ bool Engine::ClearedRow() {
   for (auto row = screen_.begin(); row != screen_.end(); ++row) {
 
     //If this row has all color values, it can be cleared
-    if (!(std::find(row->begin(), row->end(), kWhite) != row->end())) {
+    if (!(std::find(row->begin(), row->end(), kWhiteColor) != row->end())) {
       screen_.erase(row--);
       rows_cleared++;
     }
@@ -162,7 +162,7 @@ bool Engine::ClearedRow() {
   //same size
   for (int i = 0; i < rows_cleared; i++) {
     screen_.insert(screen_.begin(),
-        std::vector<cinder::Color>(width_,kWhite));
+        std::vector<cinder::Color>(width_, kWhiteColor));
   }
 
   //The number of rows cleared is added to our score.
@@ -186,7 +186,7 @@ bool Engine::HasMovementConflict(int horizontal_amt, int vertical_amt) {
     //This movement is illegal if it goes below the screen or past the
     //vertical bounds of the screen
     if (pixel_col > height_ - 1 || pixel_row < 0 || pixel_row > width_ - 1
-        || screen_[pixel_col][pixel_row] != kWhite) {
+        || screen_[pixel_col][pixel_row] != kWhiteColor) {
       return true;
     }
   }
@@ -216,7 +216,7 @@ bool Engine::HasRotationConflict() {
     }
 
     //Check if it conflicts with any other tetrominoes
-    if (screen_[x_loc][y_loc] != kWhite) {
+    if (screen_[x_loc][y_loc] != kWhiteColor) {
       return true;
     }
   }
@@ -228,7 +228,7 @@ void Engine::Reset() {
   game_over_ = {false};
   score_ = {0};
   screen_.clear();
-  screen_.resize(height_, std::vector<cinder::Color>(width_, kWhite));
+  screen_.resize(height_, std::vector<cinder::Color>(width_, kWhiteColor));
   color_theme_index_ = utils::RandNumInRange(kNumOfThemes);
   tetromino_ = Tetromino(center_tile_, color_theme_index_);
 }

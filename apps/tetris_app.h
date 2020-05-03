@@ -1,7 +1,7 @@
 // Copyright (c) 2020 CS126SP20. All rights reserved.
 
-#ifndef FINALPROJECT_APPS_MYAPP_H_
-#define FINALPROJECT_APPS_MYAPP_H_
+#ifndef FINALPROJECT_APPS_TETRISAPP_H_
+#define FINALPROJECT_APPS_TETRISAPP_H_
 
 #include <cinder/app/App.h>
 #include <cinder/audio/Voice.h>
@@ -20,12 +20,12 @@ const size_t kHeight = 20;
 //Constant outline width around each tetromino
 const float kOutlineLineWidth = 2;
 
-class MyApp : public cinder::app::App {
+class TetrisApp : public cinder::app::App {
  public:
   /**
    * App constructor. Creates an interface for Tetris.
    */
-  MyApp();
+  TetrisApp();
 
   /**
    * Applies all the necessary setup for the app.
@@ -146,4 +146,4 @@ class MyApp : public cinder::app::App {
 
 }  // namespace tetrisapp
 
-#endif  // FINALPROJECT_APPS_MYAPP_H_
+#endif  // FINALPROJECT_APPS_TETRISAPP_H_
