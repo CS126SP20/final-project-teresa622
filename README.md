@@ -14,8 +14,8 @@ layout.
 This application is a basic Tetris game. Tetromino blocks will fall down from the top of the screen, and the player can 
 rotate or translate on the screen before it lands on a surface. The surface can be the bottom of the screen or on top 
 of other tetrominoes that have already landed. The goal of the game is to make as many full lines as 
-possible. These lines will be cleared once they are made, and the player's score will increase. The player wants to get
-as high of a score as they can by clearing as many lines as they can.
+possible. These lines will be cleared once they are made, and the player's score will increase. The player wants to get as high of a score as they can by clearing as many lines as they can.
+
 ---
 ### How to build
 
