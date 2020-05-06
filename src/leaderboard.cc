@@ -2,10 +2,9 @@
 // Created by Teresa Dong on 4/17/20.
 //
 
-#include "mylibrary/leaderboard.h"
-
 #include <string>
 
+#include "mylibrary/leaderboard.h"
 #include "mylibrary/player.h"
 
 namespace tetris {

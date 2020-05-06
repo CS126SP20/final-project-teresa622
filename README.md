@@ -16,7 +16,7 @@ of other tetrominoes that have already landed. The goal of the game is to make a
 possible. These lines will be cleared once they are made, and the player's score will increase. The player wants to get
 as high of a score as they can by clearing as many lines as they can.
 ---
-###How to build the app
+###How to build
 This application utilizes Cinder, so please download it [here](https://libcinder.org/download). The latest version is 
 recommended.
 
@@ -33,13 +33,13 @@ There are 2 different flags for the program (which you can modify via Edit Confi
     * tilesize, default: 50 -- "the size of each tile" in square pixels
     * name, default: Guest -- "the name of the player", for database purposes
     
-####Hotkeys and Game Controls
+####Game Controls
 * Pause: P
 * Restart: R
 * Left: Left arrow
 * Right: Right arrow
 * Down: Down arrow
-* Fall: Space bar
+* Drop: Space bar
 
 ####Default Settings
 * Font: Arial

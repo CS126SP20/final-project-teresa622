@@ -11,14 +11,14 @@ using cinder::app::RendererGl;
 
 namespace tetrisapp {
 
-//These are the gflags that the user can modify via command line arguments.
+//These are the gflags that the user can modify via command line arguments
 DEFINE_uint32(tilesize, 30, "the size of each tile");
 DEFINE_string(name, "Guest", "the name of the player");
 
 const int kSamples = 8;
 
 //SetUp helper function. Goes through the command line arguments and parses
-//each one.
+//each one
 void ParseArgs(std::vector<std::string>* args) {
   gflags::SetUsageMessage(
       "Play a game of Tetris. Pass --helpshort for options.");

@@ -15,6 +15,11 @@
 
 namespace tetrisapp {
 
+//Note: The constant variables here are to reduce the scope of these variables.
+//Since they are only used in this file, and this is not a library, it will not
+//be used anywhere else. Therefore, there is no need for these variables to be
+//in the header.
+
 //Used to find the path to access our scoring database
 const char kDbPath[] = "tetris.db";
 
@@ -27,6 +32,9 @@ const int kStartSpeed = 750;
 const size_t kSpeedDecrement = 20;
 const size_t kLevel = 7;
 const size_t kSpeedLimit = 300;
+
+//Constant outline width around each tetromino
+const float kOutlineLineWidth = 2;
 
 //Text font defined
 #if defined(CINDER_COCOA_TOUCH)
@@ -55,7 +63,7 @@ TetrisApp::TetrisApp()
     tile_size_{FLAGS_tilesize},
     username_{FLAGS_name},
     speed_{kStartSpeed},
-    outline_color_{tetris::kThemeOutline[engine_.GetColorThemeIndex()]},
+    outline_color_{tetris::kThemeOutlines[engine_.GetColorThemeIndex()]},
     paused_{false}{}
 
 void TetrisApp::setup() {
@@ -208,7 +216,7 @@ void TetrisApp::keyDown(KeyEvent event) {
     }
 
     case KeyEvent::KEY_SPACE: {
-      engine_.UpdateMovement(tetris::Movement::kFall);
+      engine_.UpdateMovement(tetris::Movement::kDrop);
 
       //Only play this sound effect if the player is still playing
       if (!game_over_) {

@@ -5,12 +5,14 @@
 #ifndef FINALPROJECT_SRC_PLAYER_H_
 #define FINALPROJECT_SRC_PLAYER_H_
 #include <string>
+#include <utility>
 
 namespace tetris {
 
 //Stores each player's name and score. Used for score keeping in the database.
 struct Player {
-  Player(const std::string& name, size_t score) : name(name), score(score) {}
+  Player(std::string  name, size_t score) :
+  name(std::move(name)), score(score) {}
   std::string name;
   size_t score;
 };

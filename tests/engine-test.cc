@@ -48,7 +48,7 @@ TEST_CASE("Tetromino movements") {
 
   SECTION("Screen updates with placed tetrominoes") {
     //Move the current tetromino down the screen
-    engine.UpdateMovement(tetris::Movement::kFall);
+    engine.UpdateMovement(tetris::Movement::kDrop);
 
     std::vector<std::vector<cinder::Color>> screen = engine.GetScreen();
     size_t pixel_count = 0;

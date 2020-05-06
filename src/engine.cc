@@ -113,7 +113,7 @@ void Engine::UpdateMovement(Movement movement) {
         tetromino_.RotateTetromino();
       }
       break;
-    case Movement::kFall:
+    case Movement::kDrop:
       tetromino_ = GetProjection();
 
       //Generate a new tetromino, this one has reached a surface

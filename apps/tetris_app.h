@@ -17,9 +17,6 @@ namespace tetrisapp {
 const size_t kWidth = 12;
 const size_t kHeight = 20;
 
-//Constant outline width around each tetromino
-const float kOutlineLineWidth = 2;
-
 class TetrisApp : public cinder::app::App {
  public:
   /**

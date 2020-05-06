@@ -14,9 +14,6 @@
 
 namespace tetris {
 
-// The constant number of types of tetrominoes
-const size_t kNumTetrominoTypes = 7;
-
 // The rotation point is always the 2nd element in our array
 const size_t kRotationPointIndex = 1;
 
