@@ -13,9 +13,6 @@
 
 namespace tetris {
 
-//The number of pixels in every tetromino piece
-const size_t kPixelsInTetromino = 4;
-
 //The color of the locations without tetrominoes are white.
 const cinder::Color kWhiteColor(1, 1, 1);
 

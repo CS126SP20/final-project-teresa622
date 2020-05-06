@@ -17,6 +17,9 @@ namespace tetris {
 // The rotation point is always the 2nd element in our array
 const size_t kRotationPointIndex = 1;
 
+//The number of pixels in every tetromino piece
+const size_t kPixelsInTetromino = 4;
+
 // The list of different tetromino types
 const TetrominoType kTetrominoTypes[kNumTetrominoTypes] =
     {TetrominoType::kI, TetrominoType::kJ,
@@ -78,8 +81,9 @@ class Tetromino {
 
  private:
   // Holds the Location of each pixel in our tetromino
-  Location pixels_[4] = {Location(0,0), Location(0,0),
-                        Location(0,0), Location(0,0)};
+  Location pixels_[kPixelsInTetromino] =
+      {Location(0,0), Location(0,0),
+       Location(0,0), Location(0,0)};
 
   // Saves the type of tetromino this instance is
   TetrominoType tetromino_type_;

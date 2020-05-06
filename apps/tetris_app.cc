@@ -28,10 +28,9 @@ const int kScoreLimit = 3;
 
 //750 ms is the starting speed of how fast the game updates and how fast the
 //tetrominoes drop
-const int kStartSpeed = 750;
-const size_t kSpeedDecrement = 20;
-const size_t kLevel = 7;
-const size_t kSpeedLimit = 300;
+const int kStartPeriod = 750;
+const size_t kPeriodDecrement = 20;
+const size_t kLinesPerLevel = 7;
 
 //Constant outline width around each tetromino
 const float kOutlineLineWidth = 2;
@@ -62,9 +61,10 @@ TetrisApp::TetrisApp()
     leaderboard_{cinder::app::getAssetPath(kDbPath).string()},
     tile_size_{FLAGS_tilesize},
     username_{FLAGS_name},
-    speed_{kStartSpeed},
+      period_{kStartPeriod},
     outline_color_{tetris::kThemeOutlines[engine_.GetColorThemeIndex()]},
-    paused_{false}{}
+    paused_{false},
+    level_{1}{}
 
 void TetrisApp::setup() {
   cinder::gl::enableDepthWrite();
@@ -135,18 +135,16 @@ void TetrisApp::update() {
 
   //Increase the speed if we're above the speed threshold and our score has
   //increased a sufficient amount. This is like each 'level' in Tetris.
-  if (speed_ > kSpeedLimit) {
-    if (score_ != 0 && score_ % kLevel == 0) {
-      speed_ -= kSpeedDecrement;
-      clear_sound_->start();
-    }
+  if (score_ >= level_ * kLinesPerLevel) {
+    period_ -= kPeriodDecrement;
+    level_++;
+    clear_sound_->start();
   }
-
 
   const auto time = std::chrono::system_clock::now();
 
   //If enough time has passed (speed), update our game.
-  if (time - last_time_ > std::chrono::milliseconds(speed_)) {
+  if (time - last_time_ > std::chrono::milliseconds(period_)) {
     engine_.Step();
     last_time_ = time;
   }

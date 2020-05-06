@@ -1,6 +1,7 @@
 # Development
 
 ---
+- **5/5/20** Fixed leveling up sound bug. Modified variable names to make them clearer. Removed magic number.
 - **5/4/20** Wrote up and revised the README with a CA at office hours.
     * Next two days before turn in: final look-over through the code. Make sure to avoid duplicate code. Make sure that
     code style is good.

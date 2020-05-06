@@ -113,9 +113,9 @@ class TetrisApp : public cinder::app::App {
   //Keeps the leaderboard players
   std::vector<tetris::Player> top_players_;
 
-  //The speed at which the game is updated. Determines how fast the tetrominoes
-  //fall down the screen.
-  size_t speed_;
+  //How much time passes before the game is updated again.
+  //Determines how fast the tetrominoes fall down the screen.
+  size_t period_;
 
   //Tracks if the game over screen is already printed. Allows for lazy printing.
   bool printed_game_over_;
@@ -132,6 +132,9 @@ class TetrisApp : public cinder::app::App {
 
   //The score of the player
   size_t score_;
+
+  //The current level of the game
+  size_t level_;
 
   //Music and sound effect variables
   cinder::audio::VoiceRef theme_music_;
